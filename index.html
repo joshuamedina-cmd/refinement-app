@@ -481,6 +481,140 @@ body::before {
     display: none;
 }
 
+/* ===== HOME PAGE — STAGE CARDS ===== */
+.home-stage-cards {
+    display: flex; flex-direction: column; gap: 14px;
+    margin-bottom: 28px;
+}
+.home-stage-card {
+    display: flex; align-items: center; gap: 20px;
+    padding: 22px 24px;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+}
+.home-stage-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+}
+.home-stage-card[data-stage="0"]::before { background: var(--accent); }
+.home-stage-card[data-stage="1"]::before { background: var(--orange); }
+.home-stage-card[data-stage="2"]::before { background: var(--accent); }
+.home-stage-card[data-stage="3"]::before { background: var(--red); }
+.home-stage-card[data-stage="4"]::before { background: var(--green); }
+.home-stage-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 6px 24px rgba(33,150,243,0.15);
+    transform: translateY(-2px);
+}
+.home-stage-card:active { transform: scale(0.99) translateY(0); }
+.home-stage-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.125rem;
+    flex-shrink: 0;
+}
+.home-stage-card[data-stage="0"] .home-stage-num { background: var(--blue-dim); color: var(--accent-dark); }
+.home-stage-card[data-stage="1"] .home-stage-num { background: var(--orange-dim); color: var(--orange-dark); }
+.home-stage-card[data-stage="2"] .home-stage-num { background: rgba(33,150,243,0.10); color: var(--accent-dark); }
+.home-stage-card[data-stage="3"] .home-stage-num { background: var(--red-dim); color: var(--red-dark); }
+.home-stage-card[data-stage="4"] .home-stage-num { background: var(--green-dim); color: var(--green-dark); }
+.home-stage-info { flex: 1; min-width: 0; }
+.home-stage-name { font-weight: 700; font-size: 1.0625rem; color: var(--text); margin-bottom: 2px; }
+.home-stage-desc { font-size: 0.8125rem; color: var(--text-muted); }
+.home-stage-count {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 8px;
+}
+.home-stage-badge {
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.875rem; font-weight: 800;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    min-width: 48px; text-align: center;
+}
+.home-stage-card[data-stage="0"] .home-stage-badge { background: var(--blue-dim); color: var(--accent-dark); }
+.home-stage-card[data-stage="1"] .home-stage-badge { background: var(--orange-dim); color: var(--orange-dark); }
+.home-stage-card[data-stage="2"] .home-stage-badge { background: rgba(33,150,243,0.10); color: var(--accent-dark); }
+.home-stage-card[data-stage="3"] .home-stage-badge { background: var(--red-dim); color: var(--red-dark); }
+.home-stage-card[data-stage="4"] .home-stage-badge { background: var(--green-dim); color: var(--green-dark); }
+.home-stage-arrow {
+    width: 20px; height: 20px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+/* ===== PROCESS FLOW VISUAL ===== */
+.process-flow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px 16px; margin-bottom: 28px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    overflow-x: auto;
+    gap: 0;
+}
+.pf-step {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    flex-shrink: 0; min-width: 60px;
+}
+.pf-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.6875rem;
+    border: 2px solid var(--border-strong);
+    background: rgba(0,0,0,0.03);
+    color: var(--text-muted);
+    transition: all var(--transition);
+}
+.pf-step[data-idx="0"] .pf-dot { border-color: var(--accent); color: var(--accent-dark); background: var(--blue-dim); }
+.pf-step[data-idx="1"] .pf-dot { border-color: var(--orange); color: var(--orange-dark); background: var(--orange-dim); }
+.pf-step[data-idx="2"] .pf-dot { border-color: var(--accent); color: var(--accent-dark); background: rgba(33,150,243,0.10); }
+.pf-step[data-idx="3"] .pf-dot { border-color: var(--red); color: var(--red-dark); background: var(--red-dim); }
+.pf-step[data-idx="4"] .pf-dot { border-color: var(--green); color: var(--green-dark); background: var(--green-dim); }
+.pf-label { font-size: 0.625rem; font-weight: 600; color: var(--text-muted); text-align: center; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em; }
+.pf-connector {
+    flex: 0 0 auto; width: 32px; height: 2px;
+    background: var(--border-strong); margin: 0 2px;
+    margin-bottom: 20px;
+    position: relative;
+}
+.pf-connector::after {
+    content: '';
+    position: absolute;
+    right: -2px; top: -3px;
+    width: 0; height: 0;
+    border-left: 5px solid var(--border-strong);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+/* ===== COMPLETED LINK ===== */
+.home-completed-link {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 24px;
+    font-weight: 600; font-size: 0.9375rem; color: var(--text-muted);
+}
+.home-completed-link:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-dim); }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .header { padding: 10px 16px; }
@@ -495,10 +629,14 @@ body::before {
     .form-row { gap: 12px; }
     .stage-progress { padding: 12px 16px; }
     .source-batch-grid { grid-template-columns: 1fr; }
+    .home-stage-card { padding: 18px 20px; gap: 14px; }
+    .home-stage-num { width: 42px; height: 42px; font-size: 1rem; }
+    .pf-connector { width: 20px; }
 }
 @media (max-width: 480px) {
     .stats-grid { grid-template-columns: 1fr 1fr; }
     .header-subtitle { display: none; }
+    .home-stage-desc { display: none; }
 }
 
 /* ===== PRINT ===== */
@@ -566,71 +704,67 @@ body::before {
       </div>
     </div>
 
-    <!-- ===== DASHBOARD VIEW ===== -->
-    <div id="dashboardView" class="view">
-      <div class="stats-grid" id="statsGrid">
+    <!-- ===== HOME VIEW ===== -->
+    <div id="homeView" class="view">
+      <!-- Process Flow Visual -->
+      <div class="process-flow" id="processFlow"></div>
+
+      <!-- Stage Cards -->
+      <div class="home-stage-cards" id="homeStageCards"></div>
+
+      <!-- Completed Batches Link -->
+      <div class="home-completed-link" onclick="goToHistory()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/><path d="M9 14l2 2 4-4"/></svg>
+        <span>Completed Batches</span>
+        <span id="homeCompletedCount" style="font-family:'SF Mono','Consolas',monospace;font-weight:800;margin-left:auto;"></span>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid" id="homeStatsGrid">
         <div class="stat-card">
           <div class="stat-label">Batches Today</div>
-          <div class="stat-value teal" id="statToday">0</div>
+          <div class="stat-value teal" id="homeStatToday">0</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Active</div>
-          <div class="stat-value amber" id="statActive">0</div>
+          <div class="stat-value amber" id="homeStatActive">0</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Completed</div>
-          <div class="stat-value green" id="statCompleted">0</div>
+          <div class="stat-value green" id="homeStatCompleted">0</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Total MIT (g)</div>
-          <div class="stat-value teal" id="statMIT">0</div>
+          <div class="stat-value teal" id="homeStatMIT">0</div>
         </div>
-      </div>
-
-      <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchTab('active', this)">Active Batches</button>
-        <button class="tab-btn" onclick="switchTab('history', this)">Completed</button>
-      </div>
-
-      <div id="activeBatchesTab">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <h2 style="font-weight: 700; font-size: 1rem; color: var(--text);">Active Batches</h2>
-          <button class="btn btn-accent btn-sm" onclick="showBatchSelection()">+ New Batch</button>
-        </div>
-        <div id="activeBatchList" class="batch-list">
-          <div class="empty-state">
-            <div class="empty-state-icon">⚗</div>
-            <div class="empty-state-text">No active batches. Start a new batch to begin.</div>
-          </div>
-        </div>
-      </div>
-
-      <div id="historyTab" style="display:none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <h2 style="font-weight: 700; font-size: 1rem; color: var(--text);">Batch History</h2>
-          <button class="btn btn-secondary btn-sm" onclick="downloadAllCSV()" id="downloadAllBtn" style="display:none;">Download CSV</button>
-        </div>
-        <div id="historyContent"></div>
       </div>
     </div>
 
-    <!-- ===== BATCH SELECTION VIEW ===== -->
+    <!-- ===== BATCH SELECTION VIEW (for Soak) ===== -->
     <div id="batchSelectView" class="view">
       <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-        <button class="btn btn-ghost btn-icon" onclick="goToDashboard()" aria-label="Back to dashboard">
+        <button class="btn btn-ghost btn-icon" onclick="goHome()" aria-label="Back to home">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
         <div>
-          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);">Select Batch</div>
-          <div style="font-size: 0.8125rem; color: var(--text-muted);">Choose a completed crude batch to begin refinement</div>
+          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);">Stage 1: Soak</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Select a batch or start a new one</div>
         </div>
+      </div>
+
+      <!-- In-progress soak batches -->
+      <div id="soakInProgressSection" style="display:none; margin-bottom: 20px;">
+        <div style="font-weight: 700; font-size: 0.9375rem; color: var(--text); margin-bottom: 12px;">Resume In-Progress Soak</div>
+        <div id="soakInProgressList" class="batch-list"></div>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <div class="card-title">Completed Crude Batches</div>
+          <div class="card-title">Start New Batch</div>
           <button class="btn btn-ghost btn-sm" onclick="fetchSourceBatches()">↻ Refresh</button>
         </div>
+        <div style="font-weight: 700; font-size: 0.8125rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 12px;">Completed Crude Batches</div>
         <div id="sourceBatchList">
           <div class="shimmer-card" style="margin-bottom:10px;"></div>
           <div class="shimmer-card" style="margin-bottom:10px;"></div>
@@ -642,168 +776,198 @@ body::before {
             <input type="text" class="form-input" id="manualBatchName" placeholder="e.g. QL.3/5.94584">
           </div>
         </div>
-        <button class="btn btn-accent btn-block" style="margin-top:16px;" onclick="startFromSelection()">Start Refinement →</button>
+        <button class="btn btn-accent btn-block" style="margin-top:16px;" onclick="startNewSoakBatch()">Start Soak →</button>
       </div>
     </div>
 
-    <!-- ===== BATCH WORKFLOW VIEW ===== -->
-    <div id="batchView" class="view">
+    <!-- ===== STAGE FORM VIEW ===== -->
+    <div id="stageFormView" class="view">
       <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-        <button class="btn btn-ghost btn-icon" onclick="goToDashboard()" aria-label="Back to dashboard">
+        <button class="btn btn-ghost btn-icon" onclick="goHome()" aria-label="Back to home">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
         <div>
-          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);" id="batchViewTitle">Batch</div>
-          <div style="font-size: 0.8125rem; color: var(--text-muted);" id="batchViewId"></div>
+          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);" id="stageFormTitle">Stage</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);" id="stageFormSubtitle"></div>
         </div>
       </div>
 
-      <div class="stage-progress" id="stageProgress"></div>
+      <div class="stage-progress" id="stageFormProgress"></div>
 
-      <!-- STAGE 1: SOAK -->
-      <div id="stage1" class="card" style="display:none;">
-        <div class="card-header">
-          <div class="card-title">Stage 1: Soak</div>
-          <span class="batch-stage-badge badge-soak">SOAK</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="crudeWeight">Crude Weight (grams)</label>
-          <input type="number" class="form-input" id="crudeWeight" placeholder="e.g. 94584" inputmode="decimal" oninput="calcAcetone()">
-        </div>
-        <div class="computed-value">
-          <div>
-            <div class="label">Acetone Volume</div>
-            <div class="value" id="acetoneVolume">0.00 L</div>
-          </div>
-          <div style="margin-left: auto; font-size: 0.75rem; color: var(--text-muted);">= Crude × 5 ÷ 1000</div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="soakStart">Soak Start Time</label>
-            <input type="datetime-local" class="form-input" id="soakStart">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="soakEnd">Soak End Time</label>
-            <input type="datetime-local" class="form-input" id="soakEnd">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="soakOperator">Soak Operator</label>
-          <select class="form-select" id="soakOperator">
-            <option value="">Select Operator...</option>
-          </select>
-        </div>
-        <div class="monday-status" id="mondayStatusStage1"></div>
-        <button class="btn btn-accent btn-block" onclick="nextStage(1)">Next Stage →</button>
+      <!-- BATCH SELECT FOR THIS STAGE -->
+      <div id="stageSelectSection" style="display:none;">
+        <div style="font-weight: 700; font-size: 0.9375rem; color: var(--text); margin-bottom: 12px;">Select a Batch</div>
+        <div id="stageBatchList" class="batch-list" style="margin-bottom: 24px;"></div>
       </div>
 
-      <!-- STAGE 2: PINNACLE -->
-      <div id="stage2" class="card" style="display:none;">
-        <div class="card-header">
-          <div class="card-title">Stage 2: Pinnacle (Recovery)</div>
-          <span class="batch-stage-badge badge-pinnacle">PINNACLE</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="pinnacleOperator">Pinnacle Operator</label>
-          <select class="form-select" id="pinnacleOperator">
-            <option value="">Select Operator...</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="pinnacleStart">Pinnacle Start Time</label>
-            <input type="datetime-local" class="form-input" id="pinnacleStart">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="pinnacleEnd">Pinnacle End Time</label>
-            <input type="datetime-local" class="form-input" id="pinnacleEnd">
-          </div>
-        </div>
-        <div class="monday-status" id="mondayStatusStage2"></div>
-        <button class="btn btn-accent btn-block" onclick="nextStage(2)">Next Stage →</button>
-      </div>
+      <!-- STAGE FORM (shown after batch selected) -->
+      <div id="stageFormSection" style="display:none;">
 
-      <!-- STAGE 3: ROTOVAP -->
-      <div id="stage3" class="card" style="display:none;">
-        <div class="card-header">
-          <div class="card-title">Stage 3: Rotovap</div>
-          <span class="batch-stage-badge badge-rotovap">ROTOVAP</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="rotovapOperator">Rotovap Operator</label>
-          <select class="form-select" id="rotovapOperator">
-            <option value="">Select Operator...</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="rotovapStart">Rotovap Start Time</label>
-          <input type="datetime-local" class="form-input" id="rotovapStart">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="volumePinnacle">Volume Collected from Pinnacle (L)</label>
-          <input type="number" class="form-input" id="volumePinnacle" placeholder="e.g. 12.5" inputmode="decimal" step="0.01">
-        </div>
-        <div class="monday-status" id="mondayStatusStage3"></div>
-        <button class="btn btn-accent btn-block" onclick="nextStage(3)">Next Stage →</button>
-      </div>
-
-      <!-- STAGE 4: OVENS & PURGE -->
-      <div id="stage4" class="card" style="display:none;">
-        <div class="card-header">
-          <div class="card-title">Stage 4: Ovens &amp; Purge</div>
-          <span class="batch-stage-badge badge-ovens">OVENS</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="ovenOperator">Oven Operator</label>
-          <select class="form-select" id="ovenOperator">
-            <option value="">Select Operator...</option>
-          </select>
-        </div>
-        <div class="form-row">
+        <!-- SOAK FORM -->
+        <div id="formSoak" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Soak</div>
+            <span class="batch-stage-badge badge-soak">SOAK</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formSoakBatchName"></div>
           <div class="form-group">
-            <label class="form-label" for="ovenStart">Oven Start Time</label>
-            <input type="datetime-local" class="form-input" id="ovenStart">
+            <label class="form-label" for="crudeWeight">Crude Weight (grams)</label>
+            <input type="number" class="form-input" id="crudeWeight" placeholder="e.g. 94584" inputmode="decimal" oninput="calcAcetone()">
+          </div>
+          <div class="computed-value">
+            <div>
+              <div class="label">Acetone Volume</div>
+              <div class="value" id="acetoneVolume">0.00 L</div>
+            </div>
+            <div style="margin-left: auto; font-size: 0.75rem; color: var(--text-muted);">= Crude × 5 ÷ 1000</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="soakStart">Soak Start Time</label>
+              <input type="datetime-local" class="form-input" id="soakStart">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="soakEnd">Soak End Time</label>
+              <input type="datetime-local" class="form-input" id="soakEnd">
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="ovenEnd">Oven End Time</label>
-            <input type="datetime-local" class="form-input" id="ovenEnd">
+            <label class="form-label" for="soakOperator">Soak Operator</label>
+            <select class="form-select" id="soakOperator">
+              <option value="">Select Operator...</option>
+            </select>
           </div>
+          <div class="monday-status" id="mondayStatusSoak"></div>
+          <button class="btn btn-accent btn-block" onclick="submitSoak()">Submit Soak →</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="ovenNotes">Oven ID / Notes</label>
-          <input type="text" class="form-input" id="ovenNotes" placeholder="e.g. Oven 3, top rack">
-        </div>
-        <div class="monday-status" id="mondayStatusStage4"></div>
-        <button class="btn btn-accent btn-block" onclick="nextStage(4)">Next Stage →</button>
-      </div>
 
-      <!-- STAGE 5: PREP & WEIGH -->
-      <div id="stage5" class="card" style="display:none;">
-        <div class="card-header">
-          <div class="card-title">Stage 5: Prep &amp; Weigh (Raw MIT)</div>
-          <span class="batch-stage-badge badge-prepweigh">PREP &amp; WEIGH</span>
+        <!-- PINNACLE FORM -->
+        <div id="formPinnacle" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Pinnacle (Recovery)</div>
+            <span class="batch-stage-badge badge-pinnacle">PINNACLE</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formPinnacleBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="pinnacleOperator">Pinnacle Operator</label>
+            <select class="form-select" id="pinnacleOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pinnacleStart">Pinnacle Start Time</label>
+              <input type="datetime-local" class="form-input" id="pinnacleStart">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pinnacleEnd">Pinnacle End Time</label>
+              <input type="datetime-local" class="form-input" id="pinnacleEnd">
+            </div>
+          </div>
+          <div class="monday-status" id="mondayStatusPinnacle"></div>
+          <button class="btn btn-accent btn-block" onclick="submitPinnacle()">Submit Pinnacle →</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="finalOperator">Final Operator</label>
-          <select class="form-select" id="finalOperator">
-            <option value="">Select Operator...</option>
-          </select>
+
+        <!-- ROTOVAP FORM -->
+        <div id="formRotovap" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Rotovap</div>
+            <span class="batch-stage-badge badge-rotovap">ROTOVAP</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formRotovapBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="rotovapOperator">Rotovap Operator</label>
+            <select class="form-select" id="rotovapOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="rotovapStart">Rotovap Start Time</label>
+            <input type="datetime-local" class="form-input" id="rotovapStart">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="volumePinnacle">Volume Collected from Pinnacle (L)</label>
+            <input type="number" class="form-input" id="volumePinnacle" placeholder="e.g. 12.5" inputmode="decimal" step="0.01">
+          </div>
+          <div class="monday-status" id="mondayStatusRotovap"></div>
+          <button class="btn btn-accent btn-block" onclick="submitRotovap()">Submit Rotovap →</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="mitWeight">MIT Weight (grams)</label>
-          <input type="number" class="form-input" id="mitWeight" placeholder="e.g. 4500" inputmode="decimal">
+
+        <!-- OVENS & PURGE FORM -->
+        <div id="formOvens" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Ovens &amp; Purge</div>
+            <span class="batch-stage-badge badge-ovens">OVENS</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formOvensBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="ovenOperator">Oven Operator</label>
+            <select class="form-select" id="ovenOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="ovenStart">Oven Start Time</label>
+              <input type="datetime-local" class="form-input" id="ovenStart">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ovenEnd">Oven End Time</label>
+              <input type="datetime-local" class="form-input" id="ovenEnd">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ovenNotes">Oven ID / Notes</label>
+            <input type="text" class="form-input" id="ovenNotes" placeholder="e.g. Oven 3, top rack">
+          </div>
+          <div class="monday-status" id="mondayStatusOvens"></div>
+          <button class="btn btn-accent btn-block" onclick="submitOvens()">Submit Ovens →</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="weighTime">Weigh Time</label>
-          <input type="datetime-local" class="form-input" id="weighTime">
+
+        <!-- PREP & WEIGH FORM -->
+        <div id="formPrepWeigh" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Prep &amp; Weigh (Raw MIT)</div>
+            <span class="batch-stage-badge badge-prepweigh">PREP &amp; WEIGH</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formPrepWeighBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="finalOperator">Final Operator</label>
+            <select class="form-select" id="finalOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="mitWeight">MIT Weight (grams)</label>
+            <input type="number" class="form-input" id="mitWeight" placeholder="e.g. 4500" inputmode="decimal">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="weighTime">Weigh Time</label>
+            <input type="datetime-local" class="form-input" id="weighTime">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="batchComments">Comments / Notes</label>
+            <textarea class="form-input form-textarea" id="batchComments" rows="3" placeholder="Any observations, issues, or notes about this batch..."></textarea>
+          </div>
+          <div class="monday-status" id="mondayStatusPrepWeigh"></div>
+          <button class="btn btn-green btn-block" onclick="submitPrepWeigh()">✓ Complete Batch</button>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="batchComments">Comments / Notes</label>
-          <textarea class="form-input form-textarea" id="batchComments" rows="3" placeholder="Any observations, issues, or notes about this batch..."></textarea>
-        </div>
-        <div class="monday-status" id="mondayStatusStage5"></div>
-        <button class="btn btn-green btn-block" id="completeBatchBtn" onclick="completeBatch()">✓ Complete Batch</button>
       </div>
+    </div>
+
+    <!-- ===== HISTORY VIEW ===== -->
+    <div id="historyView" class="view">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <button class="btn btn-ghost btn-icon" onclick="goHome()" aria-label="Back to home">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div>
+          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);">Completed Batches</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Batch history and records</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="downloadAllCSV()" id="downloadAllBtn" style="display:none; margin-left: auto;">Download CSV</button>
+      </div>
+      <div id="historyContent"></div>
     </div>
 
     <!-- ===== COMPLETION VIEW ===== -->
@@ -817,7 +981,7 @@ body::before {
         <div class="completion-actions">
           <button class="btn btn-secondary btn-block" onclick="downloadCSV()">Download as CSV</button>
           <button class="btn btn-ghost btn-block" onclick="retryMondayFinal()" id="retryMondayBtn" style="display:none;">⟳ Retry Monday.com Submission</button>
-          <button class="btn btn-ghost btn-block" onclick="goToDashboard()">← Back to Dashboard</button>
+          <button class="btn btn-ghost btn-block" onclick="goHome()">← Back to Home</button>
         </div>
       </div>
     </div>
@@ -842,13 +1006,20 @@ body::before {
 
 <script>
 /* ==========================================================
-   REFINEMENT PROCESS FLOW — Application Logic
+   REFINEMENT PROCESS FLOW — Stage-Based Architecture
    ========================================================== */
 
 // ===== CONSTANTS =====
 const OPERATORS = ['Quinton L', 'Jaime R', 'James L', 'Jaime D', 'J.D.', 'Sly', 'Moh', 'Joshua', 'Kevin D'];
 const STAGES = ['Soak', 'Pinnacle', 'Rotovap', 'Ovens', 'Prep & Weigh'];
 const STAGE_BADGES = ['badge-soak', 'badge-pinnacle', 'badge-rotovap', 'badge-ovens', 'badge-prepweigh'];
+const STAGE_DESCS = [
+  'Crude soak in acetone solution',
+  'Pinnacle centrifuge recovery',
+  'Rotary evaporator processing',
+  'Vacuum oven drying & purge',
+  'Final prep, weigh & package'
+];
 const STAGE_COUNT = 5;
 
 // ===== MONDAY.COM CONFIG =====
@@ -927,32 +1098,17 @@ function loadState() {
 
 // ===== POPULATE OPERATOR DROPDOWNS =====
 function populateOperatorDropdowns() {
-  const selects = document.querySelectorAll('.form-select');
-  selects.forEach(sel => {
-    if (sel.id === 'loginOperator' || sel.querySelector('option[value="Quinton L"]')) {
-      // Already has operators or is login — skip if already populated
-    }
-    if (sel.id === 'loginOperator') {
-      if (sel.options.length <= 1) {
-        OPERATORS.forEach(op => {
-          const opt = document.createElement('option');
-          opt.value = op;
-          opt.textContent = op;
-          sel.appendChild(opt);
-        });
-      }
-      return;
-    }
-    // Stage operator dropdowns
-    if (['soakOperator','pinnacleOperator','rotovapOperator','ovenOperator','finalOperator'].includes(sel.id)) {
-      if (sel.options.length <= 1) {
-        OPERATORS.forEach(op => {
-          const opt = document.createElement('option');
-          opt.value = op;
-          opt.textContent = op;
-          sel.appendChild(opt);
-        });
-      }
+  const ids = ['loginOperator','soakOperator','pinnacleOperator','rotovapOperator','ovenOperator','finalOperator'];
+  ids.forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    if (sel.options.length <= 1) {
+      OPERATORS.forEach(op => {
+        const opt = document.createElement('option');
+        opt.value = op;
+        opt.textContent = op;
+        sel.appendChild(opt);
+      });
     }
   });
 }
@@ -962,7 +1118,7 @@ function init() {
   populateOperatorDropdowns();
   loadState();
   if (state.currentOperator) {
-    showDashboard();
+    showHome();
   } else {
     showView('loginView');
   }
@@ -974,12 +1130,17 @@ function showView(viewId) {
   document.getElementById(viewId).classList.add('active');
 }
 
-function showDashboard() {
+function showHome() {
   document.getElementById('operatorBadge').style.display = 'flex';
   document.getElementById('operatorName').textContent = state.currentOperator;
   document.getElementById('logoutBtn').style.display = '';
-  showView('dashboardView');
-  renderDashboard();
+  showView('homeView');
+  renderHome();
+}
+
+function goHome() {
+  state.activeBatchId = null;
+  showHome();
 }
 
 // ===== LOGIN / LOGOUT =====
@@ -988,7 +1149,7 @@ function login() {
   if (!op) { toast('Select an operator', 'error'); return; }
   state.currentOperator = op;
   saveState();
-  showDashboard();
+  showHome();
   toast('Shift started — ' + op, 'success');
 }
 
@@ -1013,112 +1174,126 @@ function confirmLogout() {
   showView('loginView');
 }
 
-// ===== DASHBOARD =====
-function renderDashboard() {
+// ===== HOME PAGE RENDERING =====
+function renderHome() {
+  renderProcessFlow();
+  renderStageCards();
+  renderHomeStats();
+}
+
+function renderProcessFlow() {
+  const container = document.getElementById('processFlow');
+  let html = '';
+  STAGES.forEach((name, i) => {
+    html += '<div class="pf-step" data-idx="' + i + '"><div class="pf-dot">' + (i + 1) + '</div><div class="pf-label">' + name + '</div></div>';
+    if (i < STAGES.length - 1) {
+      html += '<div class="pf-connector"></div>';
+    }
+  });
+  container.innerHTML = html;
+}
+
+function getStageCount(stageIdx) {
+  // Stage 0 (Soak): source board completed batches that haven't been started + active batches at stage 0
+  // Stage 1 (Pinnacle): active batches at stage 1
+  // Stage 2 (Rotovap): active batches at stage 2
+  // Stage 3 (Ovens): active batches at stage 3
+  // Stage 4 (Prep & Weigh): active batches at stage 4
+  return state.batches.filter(b => b.stage === stageIdx).length;
+}
+
+function renderStageCards() {
+  const container = document.getElementById('homeStageCards');
+  const counts = STAGES.map((_, i) => getStageCount(i));
+
+  let html = '';
+  STAGES.forEach((name, i) => {
+    const count = counts[i];
+    const countLabel = count === 1 ? '1 batch' : count + ' batches';
+    html += '<div class="home-stage-card" data-stage="' + i + '" onclick="openStage(' + i + ')">' +
+      '<div class="home-stage-num">' + (i + 1) + '</div>' +
+      '<div class="home-stage-info">' +
+        '<div class="home-stage-name">' + escHtml(name) + '</div>' +
+        '<div class="home-stage-desc">' + escHtml(STAGE_DESCS[i]) + '</div>' +
+      '</div>' +
+      '<div class="home-stage-count">' +
+        '<div class="home-stage-badge">' + count + '</div>' +
+        '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">' + (count === 0 ? 'ready' : 'ready') + '</span>' +
+      '</div>' +
+      '<svg class="home-stage-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>' +
+    '</div>';
+  });
+  container.innerHTML = html;
+
+  // Completed count
+  document.getElementById('homeCompletedCount').textContent = state.completedBatches.length;
+}
+
+function renderHomeStats() {
   const today = new Date().toDateString();
   const todayBatches = [...state.batches, ...state.completedBatches].filter(b => new Date(b.created).toDateString() === today);
   const activeBatches = state.batches.filter(b => b.stage < STAGE_COUNT);
   const completedAll = state.completedBatches.length;
   const totalMIT = state.completedBatches.reduce((sum, b) => sum + (parseFloat(b.mitWeight) || 0), 0);
 
-  document.getElementById('statToday').textContent = todayBatches.length;
-  document.getElementById('statActive').textContent = activeBatches.length;
-  document.getElementById('statCompleted').textContent = completedAll;
-  document.getElementById('statMIT').textContent = totalMIT.toLocaleString();
-
-  renderActiveBatches();
-  renderHistory();
+  document.getElementById('homeStatToday').textContent = todayBatches.length;
+  document.getElementById('homeStatActive').textContent = activeBatches.length;
+  document.getElementById('homeStatCompleted').textContent = completedAll;
+  document.getElementById('homeStatMIT').textContent = totalMIT.toLocaleString();
 }
 
-function renderActiveBatches() {
-  const container = document.getElementById('activeBatchList');
-  const active = state.batches;
-  if (active.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚗</div><div class="empty-state-text">No active batches. Start a new batch to begin.</div></div>';
-    return;
+// ===== OPEN STAGE PAGE =====
+function openStage(stageIdx) {
+  if (stageIdx === 0) {
+    // Soak — show batch selection
+    openSoakPage();
+  } else {
+    // Other stages — show batch list for that stage, then form
+    openStageSelectPage(stageIdx);
   }
-  container.innerHTML = active.map(b => {
-    const stageIdx = b.stage;
-    const dots = Array.from({length: STAGE_COUNT}, (_, i) => {
-      const cls = i < stageIdx ? 'done' : i === stageIdx ? 'current' : '';
-      return '<div class="batch-mini-dot ' + cls + '"></div>';
-    }).join('');
-    return '<div class="batch-item" onclick="openBatch(\'' + escAttr(b.id) + '\')">' +
-      '<div class="batch-id">' + escHtml(b.batchName || b.id) + '</div>' +
-      '<span class="batch-stage-badge ' + STAGE_BADGES[Math.min(stageIdx, STAGE_COUNT - 1)] + '">' + STAGES[Math.min(stageIdx, STAGE_COUNT - 1)] + '</span>' +
-      '<div class="batch-meta">' +
-        '<span class="batch-meta-item">' + escHtml(b.crudeWeight || '—') + 'g crude</span>' +
-        '<span class="batch-meta-item">' + formatDateShort(b.created) + '</span>' +
-      '</div>' +
-      '<div class="batch-mini-progress">' + dots + '</div>' +
-    '</div>';
-  }).join('');
 }
 
-function renderHistory() {
-  const container = document.getElementById('historyContent');
-  const batches = state.completedBatches;
-  const dlBtn = document.getElementById('downloadAllBtn');
-  if (batches.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">No completed batches yet.</div></div>';
-    dlBtn.style.display = 'none';
-    return;
-  }
-  dlBtn.style.display = '';
-  let html = '<div class="history-table-wrap"><table class="history-table"><thead><tr>' +
-    '<th>Batch</th><th>Date</th><th>Crude (g)</th><th>Acetone (L)</th><th>MIT (g)</th><th>Duration</th><th>Actions</th>' +
-    '</tr></thead><tbody>';
-  batches.slice().reverse().forEach(b => {
-    const dur = calcDuration(b.soakStart, b.weighTime);
-    html += '<tr>' +
-      '<td class="mono">' + escHtml(b.batchName || b.id) + '</td>' +
-      '<td>' + formatDateShort(b.created) + '</td>' +
-      '<td class="mono">' + escHtml(b.crudeWeight) + '</td>' +
-      '<td class="mono">' + escHtml(b.acetoneVolume) + '</td>' +
-      '<td class="mono">' + escHtml(b.mitWeight) + '</td>' +
-      '<td>' + dur + '</td>' +
-      '<td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); viewCompletedBatch(\'' + escAttr(b.id) + '\')">View</button></td>' +
-    '</tr>';
-  });
-  html += '</tbody></table></div>';
-  container.innerHTML = html;
-}
-
-function switchTab(tab, el) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('activeBatchesTab').style.display = tab === 'active' ? '' : 'none';
-  document.getElementById('historyTab').style.display = tab === 'history' ? '' : 'none';
-}
-
-// ===== MONDAY.COM API HELPERS =====
-async function mondayQuery(query) {
-  const resp = await fetch(MONDAY_API, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': MONDAY_TOKEN,
-      'API-Version': '2024-10'
-    },
-    body: JSON.stringify({ query })
-  });
-  return resp.json();
-}
-
-function fmtDateTime(dtStr) {
-  if (!dtStr) return null;
-  try {
-    const d = new Date(dtStr);
-    if (isNaN(d)) return null;
-    const date = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-    const time = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':00';
-    return { date, time };
-  } catch(e) { return null; }
-}
-
-// ===== BATCH SELECTION FROM SOURCE BOARD =====
+// ===== SOAK PAGE =====
 let sourceBatches = [];
 let selectedSourceId = null;
+
+function openSoakPage() {
+  selectedSourceId = null;
+  document.getElementById('manualBatchName').value = '';
+  showView('batchSelectView');
+
+  // Show in-progress soak batches (stage 0)
+  const inProgress = state.batches.filter(b => b.stage === 0);
+  const section = document.getElementById('soakInProgressSection');
+  const list = document.getElementById('soakInProgressList');
+
+  if (inProgress.length > 0) {
+    section.style.display = '';
+    list.innerHTML = inProgress.map(b =>
+      '<div class="batch-item" onclick="resumeSoakBatch(\'' + escAttr(b.id) + '\')">' +
+        '<div class="batch-id">' + escHtml(b.batchName || b.id) + '</div>' +
+        '<span class="batch-stage-badge badge-soak">IN PROGRESS</span>' +
+        '<div class="batch-meta">' +
+          '<span class="batch-meta-item">' + escHtml(b.crudeWeight || '—') + 'g crude</span>' +
+          '<span class="batch-meta-item">' + formatDateShort(b.created) + '</span>' +
+        '</div>' +
+        '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>' +
+      '</div>'
+    ).join('');
+  } else {
+    section.style.display = 'none';
+  }
+
+  fetchSourceBatches();
+}
+
+function resumeSoakBatch(batchId) {
+  const batch = state.batches.find(b => b.id === batchId);
+  if (!batch) return;
+  state.activeBatchId = batchId;
+
+  showStageForm(0, batch);
+}
 
 async function fetchSourceBatches() {
   const container = document.getElementById('sourceBatchList');
@@ -1170,14 +1345,7 @@ function selectSourceBatch(id) {
   renderSourceBatches();
 }
 
-function showBatchSelection() {
-  selectedSourceId = null;
-  document.getElementById('manualBatchName').value = '';
-  showView('batchSelectView');
-  fetchSourceBatches();
-}
-
-async function startFromSelection() {
+async function startNewSoakBatch() {
   let batchName = '';
   let sourceItemId = null;
 
@@ -1237,100 +1405,128 @@ async function startFromSelection() {
   state.activeBatchId = batch.id;
   saveState();
 
-  // Open batch workflow
-  showView('batchView');
-  document.getElementById('batchViewTitle').textContent = batchName;
-  document.getElementById('batchViewId').textContent = 'Stage 1 of ' + STAGE_COUNT;
-
-  // Reset all fields
-  resetStageFields();
-  const nowStr = toLocalDatetime(new Date());
-  document.getElementById('soakStart').value = nowStr;
-  document.getElementById('soakOperator').value = state.currentOperator || '';
-
-  showStage(0);
+  // Show soak form
+  showStageForm(0, batch);
 }
 
-function resetStageFields() {
-  document.getElementById('crudeWeight').value = '';
-  document.getElementById('acetoneVolume').textContent = '0.00 L';
-  ['soakStart','soakEnd','soakOperator','pinnacleOperator','pinnacleStart','pinnacleEnd',
-   'rotovapOperator','rotovapStart','volumePinnacle',
-   'ovenOperator','ovenStart','ovenEnd','ovenNotes',
-   'finalOperator','mitWeight','weighTime','batchComments'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  // Hide all monday status indicators
-  document.querySelectorAll('.monday-status').forEach(el => el.style.display = 'none');
+// ===== STAGE SELECT PAGE (for stages 1-4) =====
+function openStageSelectPage(stageIdx) {
+  state.activeBatchId = null;
+
+  const batchesAtStage = state.batches.filter(b => b.stage === stageIdx);
+
+  showView('stageFormView');
+  document.getElementById('stageFormTitle').textContent = 'Stage ' + (stageIdx + 1) + ': ' + STAGES[stageIdx];
+  document.getElementById('stageFormSubtitle').textContent = 'Select a batch to process';
+
+  // Render progress bar for context
+  renderStageProgressBar(stageIdx);
+
+  // Show batch selection
+  const selectSection = document.getElementById('stageSelectSection');
+  const formSection = document.getElementById('stageFormSection');
+  selectSection.style.display = '';
+  formSection.style.display = 'none';
+
+  const listEl = document.getElementById('stageBatchList');
+  if (batchesAtStage.length === 0) {
+    listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚗</div><div class="empty-state-text">No batches ready for ' + STAGES[stageIdx] + '.</div></div>';
+    return;
+  }
+
+  listEl.innerHTML = batchesAtStage.map(b => {
+    const dots = Array.from({length: STAGE_COUNT}, (_, i) => {
+      const cls = i < b.stage ? 'done' : i === b.stage ? 'current' : '';
+      return '<div class="batch-mini-dot ' + cls + '"></div>';
+    }).join('');
+    return '<div class="batch-item" onclick="selectBatchForStage(\'' + escAttr(b.id) + '\', ' + stageIdx + ')">' +
+      '<div class="batch-id">' + escHtml(b.batchName || b.id) + '</div>' +
+      '<span class="batch-stage-badge ' + STAGE_BADGES[Math.min(b.stage, STAGE_COUNT - 1)] + '">' + STAGES[Math.min(b.stage, STAGE_COUNT - 1)] + '</span>' +
+      '<div class="batch-meta">' +
+        '<span class="batch-meta-item">' + escHtml(b.crudeWeight || '—') + 'g crude</span>' +
+        '<span class="batch-meta-item">' + formatDateShort(b.created) + '</span>' +
+      '</div>' +
+      '<div class="batch-mini-progress">' + dots + '</div>' +
+      '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>' +
+    '</div>';
+  }).join('');
 }
 
-// ===== OPEN EXISTING BATCH =====
-function openBatch(batchId) {
+function selectBatchForStage(batchId, stageIdx) {
   const batch = state.batches.find(b => b.id === batchId);
   if (!batch) return;
   state.activeBatchId = batchId;
+  showStageForm(stageIdx, batch);
+}
 
-  showView('batchView');
-  document.getElementById('batchViewTitle').textContent = batch.batchName || batch.id;
-  document.getElementById('batchViewId').textContent = 'Stage ' + (batch.stage + 1) + ' of ' + STAGE_COUNT;
+// ===== SHOW STAGE FORM =====
+function showStageForm(stageIdx, batch) {
+  showView('stageFormView');
+  document.getElementById('stageFormTitle').textContent = 'Stage ' + (stageIdx + 1) + ': ' + STAGES[stageIdx];
+  document.getElementById('stageFormSubtitle').textContent = batch.batchName || batch.id;
 
-  // Populate fields from batch data
-  document.getElementById('crudeWeight').value = batch.crudeWeight || '';
-  calcAcetone();
-  document.getElementById('soakStart').value = batch.soakStart || '';
-  document.getElementById('soakEnd').value = batch.soakEnd || '';
-  document.getElementById('soakOperator').value = batch.soakOperator || '';
-  document.getElementById('pinnacleOperator').value = batch.pinnacleOperator || '';
-  document.getElementById('pinnacleStart').value = batch.pinnacleStart || '';
-  document.getElementById('pinnacleEnd').value = batch.pinnacleEnd || '';
-  document.getElementById('rotovapOperator').value = batch.rotovapOperator || '';
-  document.getElementById('rotovapStart').value = batch.rotovapStart || '';
-  document.getElementById('volumePinnacle').value = batch.volumePinnacle || '';
-  document.getElementById('ovenOperator').value = batch.ovenOperator || '';
-  document.getElementById('ovenStart').value = batch.ovenStart || '';
-  document.getElementById('ovenEnd').value = batch.ovenEnd || '';
-  document.getElementById('ovenNotes').value = batch.ovenNotes || '';
-  document.getElementById('finalOperator').value = batch.finalOperator || '';
-  document.getElementById('mitWeight').value = batch.mitWeight || '';
-  document.getElementById('weighTime').value = batch.weighTime || '';
-  document.getElementById('batchComments').value = batch.comments || '';
+  renderStageProgressBar(stageIdx);
+
+  // Hide batch select, show form
+  document.getElementById('stageSelectSection').style.display = 'none';
+  document.getElementById('stageFormSection').style.display = '';
+
+  // Hide all forms
+  ['formSoak','formPinnacle','formRotovap','formOvens','formPrepWeigh'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
 
   // Hide all monday status indicators
   document.querySelectorAll('.monday-status').forEach(el => el.style.display = 'none');
 
-  showStage(batch.stage);
-}
-
-// ===== STAGE DISPLAY =====
-function showStage(stageIdx) {
-  for (let i = 1; i <= STAGE_COUNT; i++) {
-    document.getElementById('stage' + i).style.display = (i - 1 === stageIdx) ? '' : 'none';
-  }
-
-  // Auto-fill time fields for the current stage
   const now = toLocalDatetime(new Date());
-  if (stageIdx === 0 && !document.getElementById('soakStart').value) {
-    document.getElementById('soakStart').value = now;
-  }
-  if (stageIdx === 1 && !document.getElementById('pinnacleStart').value) {
-    document.getElementById('pinnacleStart').value = now;
-  }
-  if (stageIdx === 2 && !document.getElementById('rotovapStart').value) {
-    document.getElementById('rotovapStart').value = now;
-  }
-  if (stageIdx === 3 && !document.getElementById('ovenStart').value) {
-    document.getElementById('ovenStart').value = now;
-  }
-  if (stageIdx === 4 && !document.getElementById('weighTime').value) {
-    document.getElementById('weighTime').value = now;
-  }
 
-  renderStageProgress(stageIdx);
+  if (stageIdx === 0) {
+    document.getElementById('formSoak').style.display = '';
+    document.getElementById('formSoakBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('crudeWeight').value = batch.crudeWeight || '';
+    calcAcetone();
+    document.getElementById('soakStart').value = batch.soakStart || now;
+    document.getElementById('soakEnd').value = batch.soakEnd || '';
+    document.getElementById('soakOperator').value = batch.soakOperator || state.currentOperator || '';
+    // Auto-set soakEnd if soakStart is set and soakEnd is empty
+    if (document.getElementById('soakStart').value && !document.getElementById('soakEnd').value) {
+      const start = new Date(document.getElementById('soakStart').value);
+      if (!isNaN(start)) {
+        document.getElementById('soakEnd').value = toLocalDatetime(new Date(start.getTime() + 16 * 60 * 60 * 1000));
+      }
+    }
+  } else if (stageIdx === 1) {
+    document.getElementById('formPinnacle').style.display = '';
+    document.getElementById('formPinnacleBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('pinnacleOperator').value = batch.pinnacleOperator || state.currentOperator || '';
+    document.getElementById('pinnacleStart').value = batch.pinnacleStart || now;
+    document.getElementById('pinnacleEnd').value = batch.pinnacleEnd || '';
+  } else if (stageIdx === 2) {
+    document.getElementById('formRotovap').style.display = '';
+    document.getElementById('formRotovapBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('rotovapOperator').value = batch.rotovapOperator || state.currentOperator || '';
+    document.getElementById('rotovapStart').value = batch.rotovapStart || now;
+    document.getElementById('volumePinnacle').value = batch.volumePinnacle || '';
+  } else if (stageIdx === 3) {
+    document.getElementById('formOvens').style.display = '';
+    document.getElementById('formOvensBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('ovenOperator').value = batch.ovenOperator || state.currentOperator || '';
+    document.getElementById('ovenStart').value = batch.ovenStart || now;
+    document.getElementById('ovenEnd').value = batch.ovenEnd || '';
+    document.getElementById('ovenNotes').value = batch.ovenNotes || '';
+  } else if (stageIdx === 4) {
+    document.getElementById('formPrepWeigh').style.display = '';
+    document.getElementById('formPrepWeighBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('finalOperator').value = batch.finalOperator || state.currentOperator || '';
+    document.getElementById('mitWeight').value = batch.mitWeight || '';
+    document.getElementById('weighTime').value = batch.weighTime || now;
+    document.getElementById('batchComments').value = batch.comments || '';
+  }
 }
 
-function renderStageProgress(currentStage) {
-  const container = document.getElementById('stageProgress');
+function renderStageProgressBar(currentStage) {
+  const container = document.getElementById('stageFormProgress');
   let html = '';
   STAGES.forEach((name, i) => {
     const cls = i < currentStage ? 'completed' : i === currentStage ? 'active' : '';
@@ -1363,6 +1559,31 @@ function calcDurationHours(startStr, endStr) {
   const start = new Date(startStr);
   const end = new Date(endStr);
   return ((end - start) / (1000 * 60 * 60)).toFixed(1);
+}
+
+// ===== MONDAY.COM API HELPERS =====
+async function mondayQuery(query) {
+  const resp = await fetch(MONDAY_API, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': MONDAY_TOKEN,
+      'API-Version': '2024-10'
+    },
+    body: JSON.stringify({ query })
+  });
+  return resp.json();
+}
+
+function fmtDateTime(dtStr) {
+  if (!dtStr) return null;
+  try {
+    const d = new Date(dtStr);
+    if (isNaN(d)) return null;
+    const date = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    const time = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':00';
+    return { date, time };
+  } catch(e) { return null; }
 }
 
 // ===== MONDAY STATUS INDICATOR =====
@@ -1402,157 +1623,172 @@ async function mondayMoveItem(itemId, groupId) {
   return mondayQuery(mutation);
 }
 
-// ===== NEXT STAGE =====
-async function nextStage(fromStage) {
+// ===== SUBMIT SOAK =====
+async function submitSoak() {
   const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
 
-  if (fromStage === 1) {
-    // SOAK stage
-    const crude = document.getElementById('crudeWeight').value;
-    const soakOp = document.getElementById('soakOperator').value;
-    const soakStart = document.getElementById('soakStart').value;
-    if (!crude || !soakOp || !soakStart) {
-      toast('Fill in all required fields', 'error');
-      return;
-    }
-    if (batch) {
-      batch.crudeWeight = crude;
-      batch.acetoneVolume = (parseFloat(crude) * 5 / 1000).toFixed(2);
-      batch.soakStart = soakStart;
-      batch.soakEnd = document.getElementById('soakEnd').value;
-      batch.soakOperator = soakOp;
-      batch.stage = 1;
-    }
+  const crude = document.getElementById('crudeWeight').value;
+  const soakOp = document.getElementById('soakOperator').value;
+  const soakStart = document.getElementById('soakStart').value;
+  if (!crude || !soakOp || !soakStart) {
+    toast('Fill in all required fields', 'error');
+    return;
+  }
 
-    // Write to Monday.com
-    if (batch && batch.mondayItemId) {
-      const statusEl = 'mondayStatusStage1';
-      updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
-      try {
-        const colVals = {};
-        colVals[COL_CRUDE_WEIGHT] = parseFloat(crude) || 0;
-        colVals[COL_ACETONE_VOLUME] = parseFloat(batch.acetoneVolume) || 0;
-        colVals[COL_SOAK_OPERATOR] = soakOp;
-        const ss = fmtDateTime(soakStart);
-        if (ss) colVals[COL_SOAK_START] = ss;
-        const se = fmtDateTime(batch.soakEnd);
-        if (se) colVals[COL_SOAK_END] = se;
+  batch.crudeWeight = crude;
+  batch.acetoneVolume = (parseFloat(crude) * 5 / 1000).toFixed(2);
+  batch.soakStart = soakStart;
+  batch.soakEnd = document.getElementById('soakEnd').value;
+  batch.soakOperator = soakOp;
+  batch.stage = 1;
 
-        await mondayUpdateItem(batch.mondayItemId, colVals);
-        await mondayMoveItem(batch.mondayItemId, GROUP_SOAK);
-        updateMondayStatusEl(statusEl, 'success', 'Soak data saved to Monday.com');
-      } catch(err) {
-        console.warn('Monday soak write error:', err);
-        updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
-      }
-    }
+  // Write to Monday.com
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusSoak';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      const colVals = {};
+      colVals[COL_CRUDE_WEIGHT] = parseFloat(crude) || 0;
+      colVals[COL_ACETONE_VOLUME] = parseFloat(batch.acetoneVolume) || 0;
+      colVals[COL_SOAK_OPERATOR] = soakOp;
+      const ss = fmtDateTime(soakStart);
+      if (ss) colVals[COL_SOAK_START] = ss;
+      const se = fmtDateTime(batch.soakEnd);
+      if (se) colVals[COL_SOAK_END] = se;
 
-  } else if (fromStage === 2) {
-    // PINNACLE stage
-    const op = document.getElementById('pinnacleOperator').value;
-    const start = document.getElementById('pinnacleStart').value;
-    if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
-    if (batch) {
-      batch.pinnacleOperator = op;
-      batch.pinnacleStart = start;
-      batch.pinnacleEnd = document.getElementById('pinnacleEnd').value;
-      batch.stage = 2;
-    }
-
-    if (batch && batch.mondayItemId) {
-      const statusEl = 'mondayStatusStage2';
-      updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
-      try {
-        const colVals = {};
-        colVals[COL_PIN_OP] = op;
-        const ps = fmtDateTime(start);
-        if (ps) colVals[COL_PIN_START] = ps;
-        const pe = fmtDateTime(batch.pinnacleEnd);
-        if (pe) colVals[COL_PIN_END] = pe;
-
-        await mondayUpdateItem(batch.mondayItemId, colVals);
-        await mondayMoveItem(batch.mondayItemId, GROUP_PINNACLE);
-        updateMondayStatusEl(statusEl, 'success', 'Pinnacle data saved to Monday.com');
-      } catch(err) {
-        console.warn('Monday pinnacle write error:', err);
-        updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
-      }
-    }
-
-  } else if (fromStage === 3) {
-    // ROTOVAP stage
-    const op = document.getElementById('rotovapOperator').value;
-    const start = document.getElementById('rotovapStart').value;
-    if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
-    if (batch) {
-      batch.rotovapOperator = op;
-      batch.rotovapStart = start;
-      batch.volumePinnacle = document.getElementById('volumePinnacle').value;
-      batch.stage = 3;
-    }
-
-    if (batch && batch.mondayItemId) {
-      const statusEl = 'mondayStatusStage3';
-      updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
-      try {
-        const colVals = {};
-        colVals[COL_ROTO_OP] = op;
-        const rs = fmtDateTime(start);
-        if (rs) colVals[COL_ROTO_START] = rs;
-        if (batch.volumePinnacle) colVals[COL_ROTO_VOLUME] = parseFloat(batch.volumePinnacle) || 0;
-
-        await mondayUpdateItem(batch.mondayItemId, colVals);
-        await mondayMoveItem(batch.mondayItemId, GROUP_ROTOVAP);
-        updateMondayStatusEl(statusEl, 'success', 'Rotovap data saved to Monday.com');
-      } catch(err) {
-        console.warn('Monday rotovap write error:', err);
-        updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
-      }
-    }
-
-  } else if (fromStage === 4) {
-    // OVENS & PURGE stage
-    const op = document.getElementById('ovenOperator').value;
-    const start = document.getElementById('ovenStart').value;
-    if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
-    if (batch) {
-      batch.ovenOperator = op;
-      batch.ovenStart = start;
-      batch.ovenEnd = document.getElementById('ovenEnd').value;
-      batch.ovenNotes = document.getElementById('ovenNotes').value;
-      batch.stage = 4;
-    }
-
-    if (batch && batch.mondayItemId) {
-      const statusEl = 'mondayStatusStage4';
-      updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
-      try {
-        await mondayMoveItem(batch.mondayItemId, GROUP_OVENS);
-        updateMondayStatusEl(statusEl, 'success', 'Moved to Ovens group on Monday.com');
-      } catch(err) {
-        console.warn('Monday ovens write error:', err);
-        updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
-      }
+      await mondayUpdateItem(batch.mondayItemId, colVals);
+      await mondayMoveItem(batch.mondayItemId, GROUP_SOAK);
+      updateMondayStatusEl(statusEl, 'success', 'Soak data saved to Monday.com');
+    } catch(err) {
+      console.warn('Monday soak write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
     }
   }
 
   saveState();
-  if (batch) {
-    document.getElementById('batchViewId').textContent = 'Stage ' + (batch.stage + 1) + ' of ' + STAGE_COUNT;
-  }
-  showStage(fromStage);
-  toast('Stage ' + fromStage + ' saved', 'success');
+  toast('Soak submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
 }
 
-// ===== COMPLETE BATCH =====
-async function completeBatch() {
+// ===== SUBMIT PINNACLE =====
+async function submitPinnacle() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const op = document.getElementById('pinnacleOperator').value;
+  const start = document.getElementById('pinnacleStart').value;
+  if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
+
+  batch.pinnacleOperator = op;
+  batch.pinnacleStart = start;
+  batch.pinnacleEnd = document.getElementById('pinnacleEnd').value;
+  batch.stage = 2;
+
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusPinnacle';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      const colVals = {};
+      colVals[COL_PIN_OP] = op;
+      const ps = fmtDateTime(start);
+      if (ps) colVals[COL_PIN_START] = ps;
+      const pe = fmtDateTime(batch.pinnacleEnd);
+      if (pe) colVals[COL_PIN_END] = pe;
+
+      await mondayUpdateItem(batch.mondayItemId, colVals);
+      await mondayMoveItem(batch.mondayItemId, GROUP_PINNACLE);
+      updateMondayStatusEl(statusEl, 'success', 'Pinnacle data saved to Monday.com');
+    } catch(err) {
+      console.warn('Monday pinnacle write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
+    }
+  }
+
+  saveState();
+  toast('Pinnacle submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
+}
+
+// ===== SUBMIT ROTOVAP =====
+async function submitRotovap() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const op = document.getElementById('rotovapOperator').value;
+  const start = document.getElementById('rotovapStart').value;
+  if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
+
+  batch.rotovapOperator = op;
+  batch.rotovapStart = start;
+  batch.volumePinnacle = document.getElementById('volumePinnacle').value;
+  batch.stage = 3;
+
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusRotovap';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      const colVals = {};
+      colVals[COL_ROTO_OP] = op;
+      const rs = fmtDateTime(start);
+      if (rs) colVals[COL_ROTO_START] = rs;
+      if (batch.volumePinnacle) colVals[COL_ROTO_VOLUME] = parseFloat(batch.volumePinnacle) || 0;
+
+      await mondayUpdateItem(batch.mondayItemId, colVals);
+      await mondayMoveItem(batch.mondayItemId, GROUP_ROTOVAP);
+      updateMondayStatusEl(statusEl, 'success', 'Rotovap data saved to Monday.com');
+    } catch(err) {
+      console.warn('Monday rotovap write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
+    }
+  }
+
+  saveState();
+  toast('Rotovap submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
+}
+
+// ===== SUBMIT OVENS =====
+async function submitOvens() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const op = document.getElementById('ovenOperator').value;
+  const start = document.getElementById('ovenStart').value;
+  if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
+
+  batch.ovenOperator = op;
+  batch.ovenStart = start;
+  batch.ovenEnd = document.getElementById('ovenEnd').value;
+  batch.ovenNotes = document.getElementById('ovenNotes').value;
+  batch.stage = 4;
+
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusOvens';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      await mondayMoveItem(batch.mondayItemId, GROUP_OVENS);
+      updateMondayStatusEl(statusEl, 'success', 'Moved to Ovens group on Monday.com');
+    } catch(err) {
+      console.warn('Monday ovens write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
+    }
+  }
+
+  saveState();
+  toast('Ovens submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
+}
+
+// ===== SUBMIT PREP & WEIGH (COMPLETE BATCH) =====
+async function submitPrepWeigh() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
   const op = document.getElementById('finalOperator').value;
   const mit = document.getElementById('mitWeight').value;
   const weighTime = document.getElementById('weighTime').value;
   if (!op || !mit || !weighTime) { toast('Fill in all required fields', 'error'); return; }
-
-  const batch = state.batches.find(b => b.id === state.activeBatchId);
-  if (!batch) { toast('Batch not found', 'error'); return; }
 
   batch.finalOperator = op;
   batch.mitWeight = mit;
@@ -1600,6 +1836,7 @@ async function completeBatch() {
   }
 }
 
+// ===== COMPLETION VIEW =====
 function showCompletionView(batch) {
   showView('completionView');
   document.getElementById('completionBatchId').textContent = batch.batchName || batch.id;
@@ -1673,6 +1910,41 @@ async function retryMondayFinal() {
     updateMondayStatusEl('mondayStatusFinal', 'error', 'Retry failed — could not submit to Monday.com');
     document.getElementById('retryMondayBtn').style.display = '';
   }
+}
+
+// ===== HISTORY VIEW =====
+function goToHistory() {
+  showView('historyView');
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById('historyContent');
+  const batches = state.completedBatches;
+  const dlBtn = document.getElementById('downloadAllBtn');
+  if (batches.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">No completed batches yet.</div></div>';
+    dlBtn.style.display = 'none';
+    return;
+  }
+  dlBtn.style.display = '';
+  let html = '<div class="history-table-wrap"><table class="history-table"><thead><tr>' +
+    '<th>Batch</th><th>Date</th><th>Crude (g)</th><th>Acetone (L)</th><th>MIT (g)</th><th>Duration</th><th>Actions</th>' +
+    '</tr></thead><tbody>';
+  batches.slice().reverse().forEach(b => {
+    const dur = calcDuration(b.soakStart, b.weighTime);
+    html += '<tr>' +
+      '<td class="mono">' + escHtml(b.batchName || b.id) + '</td>' +
+      '<td>' + formatDateShort(b.created) + '</td>' +
+      '<td class="mono">' + escHtml(b.crudeWeight) + '</td>' +
+      '<td class="mono">' + escHtml(b.acetoneVolume) + '</td>' +
+      '<td class="mono">' + escHtml(b.mitWeight) + '</td>' +
+      '<td>' + dur + '</td>' +
+      '<td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); viewCompletedBatch(\'' + escAttr(b.id) + '\')">View</button></td>' +
+    '</tr>';
+  });
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
 }
 
 // ===== CSV DOWNLOAD =====
@@ -1754,44 +2026,6 @@ function downloadCsvBlob(csv, filename) {
   toast('CSV downloaded', 'success');
 }
 
-// ===== NAVIGATION =====
-function goToDashboard() {
-  if (state.activeBatchId) {
-    saveBatchProgress();
-  }
-  state.activeBatchId = null;
-  showDashboard();
-}
-
-function saveBatchProgress() {
-  const batch = state.batches.find(b => b.id === state.activeBatchId);
-  if (!batch) return;
-
-  const crude = document.getElementById('crudeWeight').value;
-  if (crude) batch.crudeWeight = crude;
-  batch.acetoneVolume = crude ? (parseFloat(crude) * 5 / 1000).toFixed(2) : batch.acetoneVolume;
-  const soakOp = document.getElementById('soakOperator').value;
-  if (soakOp) batch.soakOperator = soakOp;
-  batch.soakStart = document.getElementById('soakStart').value || batch.soakStart;
-  batch.soakEnd = document.getElementById('soakEnd').value || batch.soakEnd;
-  batch.pinnacleOperator = document.getElementById('pinnacleOperator').value || batch.pinnacleOperator;
-  batch.pinnacleStart = document.getElementById('pinnacleStart').value || batch.pinnacleStart;
-  batch.pinnacleEnd = document.getElementById('pinnacleEnd').value || batch.pinnacleEnd;
-  batch.rotovapOperator = document.getElementById('rotovapOperator').value || batch.rotovapOperator;
-  batch.rotovapStart = document.getElementById('rotovapStart').value || batch.rotovapStart;
-  batch.volumePinnacle = document.getElementById('volumePinnacle').value || batch.volumePinnacle;
-  batch.ovenOperator = document.getElementById('ovenOperator').value || batch.ovenOperator;
-  batch.ovenStart = document.getElementById('ovenStart').value || batch.ovenStart;
-  batch.ovenEnd = document.getElementById('ovenEnd').value || batch.ovenEnd;
-  batch.ovenNotes = document.getElementById('ovenNotes').value || batch.ovenNotes;
-  batch.finalOperator = document.getElementById('finalOperator').value || batch.finalOperator;
-  batch.mitWeight = document.getElementById('mitWeight').value || batch.mitWeight;
-  batch.weighTime = document.getElementById('weighTime').value || batch.weighTime;
-  batch.comments = document.getElementById('batchComments').value || batch.comments;
-
-  saveState();
-}
-
 // ===== UTILITIES =====
 function toLocalDatetime(date) {
   const off = date.getTimezoneOffset();
@@ -1853,7 +2087,23 @@ document.getElementById('soakStart').addEventListener('change', function() {
 // ===== PREVIEW MODE (for development/testing) =====
 function checkPreview() {
   const hash = window.location.hash;
+  if (hash.includes('preview=home')) {
+    state.currentOperator = 'Quinton L';
+    state.batches = [
+      { id: 'ref_1', batchName: 'QL.3/5.94584', created: new Date().toISOString(), stage: 0, crudeWeight: '94584', acetoneVolume: '472.92', soakStart: toLocalDatetime(new Date(Date.now() - 3600000)), soakEnd: '', soakOperator: 'Quinton L', mondayItemId: null },
+      { id: 'ref_2', batchName: 'JR.3/5.52000', created: new Date().toISOString(), stage: 3, crudeWeight: '52000', acetoneVolume: '260.00', soakStart: toLocalDatetime(new Date(Date.now() - 20*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 4*3600000)), soakOperator: 'Jaime R', pinnacleOperator: 'Jaime R', pinnacleStart: toLocalDatetime(new Date(Date.now() - 3*3600000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 1*3600000)), rotovapOperator: 'James L', rotovapStart: toLocalDatetime(new Date(Date.now() - 0.5*3600000)), volumePinnacle: '48.5', ovenOperator: 'Sly', ovenStart: toLocalDatetime(new Date(Date.now() - 0.25*3600000)), mondayItemId: null },
+      { id: 'ref_3', batchName: 'JL.3/5.78200', created: new Date().toISOString(), stage: 1, crudeWeight: '78200', acetoneVolume: '391.00', soakStart: toLocalDatetime(new Date(Date.now() - 18*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 2*3600000)), soakOperator: 'James L', pinnacleOperator: 'James L', pinnacleStart: toLocalDatetime(new Date()), mondayItemId: null },
+      { id: 'ref_4', batchName: 'JD.3/5.41000', created: new Date().toISOString(), stage: 2, crudeWeight: '41000', acetoneVolume: '205.00', soakStart: toLocalDatetime(new Date(Date.now() - 24*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 8*3600000)), soakOperator: 'Jaime D', pinnacleOperator: 'Jaime D', pinnacleStart: toLocalDatetime(new Date(Date.now() - 6*3600000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 4*3600000)), rotovapOperator: 'Moh', rotovapStart: toLocalDatetime(new Date()), mondayItemId: null },
+      { id: 'ref_5', batchName: 'SL.3/5.33000', created: new Date().toISOString(), stage: 4, crudeWeight: '33000', acetoneVolume: '165.00', soakStart: toLocalDatetime(new Date(Date.now() - 48*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 32*3600000)), soakOperator: 'Sly', pinnacleOperator: 'Sly', pinnacleStart: toLocalDatetime(new Date(Date.now() - 30*3600000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 28*3600000)), rotovapOperator: 'Sly', rotovapStart: toLocalDatetime(new Date(Date.now() - 26*3600000)), volumePinnacle: '30.2', ovenOperator: 'Kevin D', ovenStart: toLocalDatetime(new Date(Date.now() - 20*3600000)), ovenEnd: toLocalDatetime(new Date(Date.now() - 8*3600000)), ovenNotes: 'Oven 2', mondayItemId: null }
+    ];
+    state.completedBatches = [
+      { id: 'ref_0', batchName: 'JD.3/4.61000', created: new Date(Date.now() - 86400000).toISOString(), completedAt: new Date(Date.now() - 43200000).toISOString(), stage: 5, crudeWeight: '61000', acetoneVolume: '305.00', mitWeight: '3200', soakStart: toLocalDatetime(new Date(Date.now() - 86400000)), soakEnd: toLocalDatetime(new Date(Date.now() - 70400000)), soakOperator: 'Jaime D', pinnacleOperator: 'Jaime D', pinnacleStart: toLocalDatetime(new Date(Date.now() - 70000000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 60000000)), rotovapOperator: 'Quinton L', rotovapStart: toLocalDatetime(new Date(Date.now() - 55000000)), volumePinnacle: '48.5', ovenOperator: 'Moh', ovenStart: toLocalDatetime(new Date(Date.now() - 50000000)), ovenEnd: toLocalDatetime(new Date(Date.now() - 45000000)), ovenNotes: 'Oven 2', finalOperator: 'Quinton L', weighTime: toLocalDatetime(new Date(Date.now() - 43200000)), mondayItemId: null }
+    ];
+    showHome();
+    return true;
+  }
   if (hash.includes('preview=dashboard')) {
+    // Legacy alias
     state.currentOperator = 'Quinton L';
     state.batches = [
       { id: 'ref_1', batchName: 'QL.3/5.94584', created: new Date().toISOString(), stage: 0, crudeWeight: '94584', acetoneVolume: '472.92', soakStart: toLocalDatetime(new Date(Date.now() - 3600000)), soakEnd: '', soakOperator: 'Quinton L', mondayItemId: null },
@@ -1863,7 +2113,7 @@ function checkPreview() {
     state.completedBatches = [
       { id: 'ref_0', batchName: 'JD.3/4.61000', created: new Date(Date.now() - 86400000).toISOString(), completedAt: new Date(Date.now() - 43200000).toISOString(), stage: 5, crudeWeight: '61000', acetoneVolume: '305.00', mitWeight: '3200', soakStart: toLocalDatetime(new Date(Date.now() - 86400000)), soakEnd: toLocalDatetime(new Date(Date.now() - 70400000)), soakOperator: 'Jaime D', pinnacleOperator: 'Jaime D', pinnacleStart: toLocalDatetime(new Date(Date.now() - 70000000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 60000000)), rotovapOperator: 'Quinton L', rotovapStart: toLocalDatetime(new Date(Date.now() - 55000000)), volumePinnacle: '48.5', ovenOperator: 'Moh', ovenStart: toLocalDatetime(new Date(Date.now() - 50000000)), ovenEnd: toLocalDatetime(new Date(Date.now() - 45000000)), ovenNotes: 'Oven 2', finalOperator: 'Quinton L', weighTime: toLocalDatetime(new Date(Date.now() - 43200000)), mondayItemId: null }
     ];
-    showDashboard();
+    showHome();
     return true;
   }
   if (hash.includes('preview=select')) {
@@ -1871,23 +2121,22 @@ function checkPreview() {
     document.getElementById('operatorBadge').style.display = 'flex';
     document.getElementById('operatorName').textContent = 'Quinton L';
     document.getElementById('logoutBtn').style.display = '';
-    showBatchSelection();
+    openSoakPage();
     return true;
   }
   if (hash.includes('preview=soak')) {
     state.currentOperator = 'Quinton L';
-    showView('batchView');
     document.getElementById('operatorBadge').style.display = 'flex';
     document.getElementById('operatorName').textContent = 'Quinton L';
     document.getElementById('logoutBtn').style.display = '';
-    document.getElementById('batchViewTitle').textContent = 'QL.3/12.94584';
-    document.getElementById('batchViewId').textContent = 'Stage 1 of 5';
-    document.getElementById('crudeWeight').value = '94584';
-    calcAcetone();
-    document.getElementById('soakStart').value = toLocalDatetime(new Date());
-    document.getElementById('soakEnd').value = toLocalDatetime(new Date(Date.now() + 16*3600000));
-    document.getElementById('soakOperator').value = 'Quinton L';
-    showStage(0);
+    const batch = {
+      id: 'ref_preview', batchName: 'QL.3/12.94584', created: new Date().toISOString(), stage: 0,
+      crudeWeight: '94584', soakStart: toLocalDatetime(new Date()), soakEnd: toLocalDatetime(new Date(Date.now() + 16*3600000)),
+      soakOperator: 'Quinton L', mondayItemId: null
+    };
+    state.batches = [batch];
+    state.activeBatchId = batch.id;
+    showStageForm(0, batch);
     return true;
   }
   return false;
