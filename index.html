@@ -639,6 +639,83 @@ body::before {
     .home-stage-desc { display: none; }
 }
 
+/* ===== BASIFY PAGE ===== */
+.basify-timer-display {
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-size: 3.5rem; font-weight: 800; line-height: 1;
+    font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+    color: var(--text); text-align: center; margin: 24px 0;
+    transition: color 300ms ease;
+}
+.basify-timer-display.running { color: var(--green-dark); }
+.basify-timer-label {
+    text-align: center; font-size: 0.8125rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-muted); margin-bottom: 8px;
+}
+.basify-start-btn {
+    width: 140px; height: 140px; border-radius: 50%;
+    border: 4px solid var(--green); background: var(--green-dim);
+    color: var(--green-dark); font-family: var(--font);
+    font-weight: 800; font-size: 1.125rem; text-transform: uppercase;
+    letter-spacing: 0.04em; cursor: pointer; transition: all var(--transition);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 4px; margin: 0 auto;
+}
+.basify-start-btn:hover { background: rgba(76,175,80,0.20); transform: scale(1.04); }
+.basify-start-btn:active { transform: scale(0.97); }
+.basify-start-btn.running {
+    border-color: var(--red); background: var(--red-dim); color: var(--red-dark);
+}
+.basify-start-btn.running:hover { background: rgba(244,67,54,0.20); }
+.basify-start-btn .btn-icon-inner { width: 32px; height: 32px; }
+.basify-ro-list { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
+.basify-ro-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; background: rgba(33,150,243,0.06);
+    border: 1px solid rgba(33,150,243,0.12); border-radius: var(--radius-sm);
+}
+.basify-ro-item .ro-name {
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-weight: 700; font-size: 0.9375rem; color: var(--accent-dark);
+}
+.basify-ro-item .ro-date { font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
+.basify-batch-name {
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-size: 1.5rem; font-weight: 800; color: var(--purple);
+    text-align: center; margin: 16px 0; padding: 16px;
+    background: var(--purple-dim); border: 1.5px solid rgba(123,31,162,0.2);
+    border-radius: var(--radius);
+}
+.home-basify-card {
+    display: flex; align-items: center; gap: 20px;
+    padding: 22px 24px; background: var(--card-bg);
+    border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+    cursor: pointer; transition: all var(--transition);
+    box-shadow: var(--shadow); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); position: relative; overflow: hidden;
+    margin-bottom: 14px;
+}
+.home-basify-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 5px; background: var(--purple);
+}
+.home-basify-card:hover {
+    border-color: var(--purple); box-shadow: 0 6px 24px rgba(123,31,162,0.15);
+    transform: translateY(-2px);
+}
+.home-basify-card:active { transform: scale(0.99) translateY(0); }
+.home-basify-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.125rem; flex-shrink: 0;
+    background: var(--purple-dim); color: var(--purple);
+}
+@media (max-width: 480px) {
+    .basify-timer-display { font-size: 2.5rem; }
+    .basify-start-btn { width: 120px; height: 120px; font-size: 1rem; }
+}
+
 /* ===== PRINT ===== */
 @media print { .header, .tab-bar, .btn { display: none !important; } }
 </style>
@@ -711,6 +788,16 @@ body::before {
 
       <!-- Stage Cards -->
       <div class="home-stage-cards" id="homeStageCards"></div>
+
+      <!-- Basify Card -->
+      <div class="home-basify-card" onclick="openBasifyPage()">
+        <div class="home-basify-num">FB</div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-weight: 700; font-size: 1.0625rem; color: var(--text);">Basify &amp; Flocc</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">pH adjustment, flocculation &amp; settle</div>
+        </div>
+        <svg style="width:20px;height:20px;color:var(--text-muted);flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
 
       <!-- Completed Batches Link -->
       <div class="home-completed-link" onclick="goToHistory()">
@@ -955,6 +1042,60 @@ body::before {
       </div>
     </div>
 
+    <!-- ===== BASIFY VIEW ===== -->
+    <div id="basifyView" class="view">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <button class="btn btn-ghost btn-icon" onclick="goHome()" aria-label="Back to home">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div>
+          <div style="font-weight: 800; font-size: 1.125rem; color: var(--purple);">Basify &amp; Flocc</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Start a basify batch, track run time</div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="basify-timer-label" id="basifyTimerLabel">Batch Timer</div>
+        <div class="basify-timer-display" id="basifyTimerDisplay">00:00:00</div>
+        <button class="basify-start-btn" id="basifyStartBtn" onclick="toggleBasifyBatch()">
+          <svg class="btn-icon-inner" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          <span>Start</span>
+        </button>
+      </div>
+      <div class="card" style="margin-bottom: 20px;" id="basifyOperatorCard">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="basifyOperator">Basify Operator</label>
+          <select class="form-select" id="basifyOperator"><option value="">Select Operator...</option></select>
+        </div>
+      </div>
+      <div class="card" id="basifyROCard" style="display:none;">
+        <div class="card-header">
+          <div class="card-title">RO System Batches (last 24h)</div>
+          <button class="btn btn-ghost btn-sm" onclick="fetchROBatches()">Refresh</button>
+        </div>
+        <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">These will be added as sub-items when the batch finishes.</div>
+        <div id="basifyROList" class="basify-ro-list"><div class="shimmer-card"></div></div>
+      </div>
+      <div class="monday-status" id="mondayStatusBasify"></div>
+    </div>
+
+    <!-- ===== BASIFY COMPLETION VIEW ===== -->
+    <div id="basifyCompleteView" class="view">
+      <div class="card completion-card">
+        <div class="completion-icon" style="background:var(--purple-dim);color:var(--purple);border-color:rgba(123,31,162,0.3);">FB</div>
+        <div class="completion-title">FB Batch Complete</div>
+        <div class="basify-batch-name" id="basifyCompleteBatchName"></div>
+        <div class="summary-grid" id="basifyCompleteSummary"></div>
+        <div class="monday-status" id="mondayStatusBasifyComplete"></div>
+        <div style="margin-top: 12px;">
+          <div style="font-weight:700;font-size:0.9375rem;color:var(--text);margin-bottom:8px;">RO Batches Linked as Sub-Items:</div>
+          <div id="basifyCompleteROList" class="basify-ro-list"></div>
+        </div>
+        <div class="completion-actions">
+          <button class="btn btn-ghost btn-block" onclick="goHome()">Back to Home</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ===== HISTORY VIEW ===== -->
     <div id="historyView" class="view">
       <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
@@ -1098,7 +1239,7 @@ function loadState() {
 
 // ===== POPULATE OPERATOR DROPDOWNS =====
 function populateOperatorDropdowns() {
-  const ids = ['loginOperator','soakOperator','pinnacleOperator','rotovapOperator','ovenOperator','finalOperator'];
+  const ids = ['loginOperator','soakOperator','pinnacleOperator','rotovapOperator','ovenOperator','finalOperator','basifyOperator'];
   ids.forEach(id => {
     const sel = document.getElementById(id);
     if (!sel) return;
@@ -2140,6 +2281,248 @@ function checkPreview() {
     return true;
   }
   return false;
+}
+
+
+// ===== BASIFY & FLOCC =====
+const BASIFY_BOARD_ID = 18402821844;
+const BASIFY_GROUP_RO = 'group_mm16ennm';
+const BASIFY_GROUP_BASIFY = 'group_mm16wch5';
+const BASIFY_GROUP_TANKC = 'group_mm163d9y';
+const BASIFY_COL_BATCH_NAME = 'text_mm166879';
+const BASIFY_COL_OPERATOR = 'text_mm16pd4m';
+const BASIFY_COL_TIME = 'text_mm1635';
+const BASIFY_COL_DATE = 'date4';
+
+let basifyState = {
+  running: false,
+  startTime: null,
+  timerInterval: null,
+  roBatches: [],
+  currentBatchName: null
+};
+
+function openBasifyPage() {
+  showView('basifyView');
+  const opSel = document.getElementById('basifyOperator');
+  if (state.currentOperator && opSel) opSel.value = state.currentOperator;
+  loadBasifyState();
+  if (basifyState.running && basifyState.startTime) {
+    resumeBasifyTimer();
+  } else {
+    resetBasifyUI();
+  }
+}
+
+function loadBasifyState() {
+  const saved = storage.getItem('basifyState');
+  if (saved) {
+    try { basifyState = { ...basifyState, ...JSON.parse(saved) }; } catch(e) {}
+  }
+}
+
+function saveBasifyState() {
+  storage.setItem('basifyState', JSON.stringify({
+    running: basifyState.running,
+    startTime: basifyState.startTime,
+    currentBatchName: basifyState.currentBatchName
+  }));
+}
+
+function resetBasifyUI() {
+  document.getElementById('basifyTimerDisplay').textContent = '00:00:00';
+  document.getElementById('basifyTimerDisplay').classList.remove('running');
+  const btn = document.getElementById('basifyStartBtn');
+  btn.classList.remove('running');
+  btn.innerHTML = '<svg class="btn-icon-inner" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg><span>Start</span>';
+  document.getElementById('basifyTimerLabel').textContent = 'Batch Timer';
+  document.getElementById('basifyROCard').style.display = 'none';
+  document.getElementById('basifyOperatorCard').style.display = '';
+}
+
+function toggleBasifyBatch() {
+  if (basifyState.running) { finishBasifyBatch(); }
+  else { startBasifyBatch(); }
+}
+
+function startBasifyBatch() {
+  const op = document.getElementById('basifyOperator').value;
+  if (!op) { toast('Select an operator first', 'error'); return; }
+  basifyState.running = true;
+  basifyState.startTime = new Date().toISOString();
+  basifyState.currentBatchName = null;
+  saveBasifyState();
+  const btn = document.getElementById('basifyStartBtn');
+  btn.classList.add('running');
+  btn.innerHTML = '<svg class="btn-icon-inner" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span>Finish</span>';
+  document.getElementById('basifyTimerDisplay').classList.add('running');
+  document.getElementById('basifyTimerLabel').textContent = 'Running...';
+  document.getElementById('basifyOperatorCard').style.display = 'none';
+  startBasifyTimerTick();
+  document.getElementById('basifyROCard').style.display = '';
+  fetchROBatches();
+  toast('Basify batch started', 'success');
+}
+
+function resumeBasifyTimer() {
+  const btn = document.getElementById('basifyStartBtn');
+  btn.classList.add('running');
+  btn.innerHTML = '<svg class="btn-icon-inner" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg><span>Finish</span>';
+  document.getElementById('basifyTimerDisplay').classList.add('running');
+  document.getElementById('basifyTimerLabel').textContent = 'Running...';
+  document.getElementById('basifyOperatorCard').style.display = 'none';
+  document.getElementById('basifyROCard').style.display = '';
+  startBasifyTimerTick();
+  fetchROBatches();
+}
+
+function startBasifyTimerTick() {
+  if (basifyState.timerInterval) clearInterval(basifyState.timerInterval);
+  basifyState.timerInterval = setInterval(updateBasifyTimer, 1000);
+  updateBasifyTimer();
+}
+
+function updateBasifyTimer() {
+  if (!basifyState.startTime) return;
+  const elapsed = Math.floor((Date.now() - new Date(basifyState.startTime).getTime()) / 1000);
+  const h = Math.floor(elapsed / 3600);
+  const m = Math.floor((elapsed % 3600) / 60);
+  const s = elapsed % 60;
+  document.getElementById('basifyTimerDisplay').textContent =
+    String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+async function fetchROBatches() {
+  const container = document.getElementById('basifyROList');
+  container.innerHTML = '<div class="shimmer-card"></div>';
+  try {
+    const query = '{ boards(ids: ' + BASIFY_BOARD_ID + ') { groups(ids: ["' + BASIFY_GROUP_RO + '"]) { items_page(limit: 50) { items { id name created_at column_values(ids: ["' + BASIFY_COL_BATCH_NAME + '", "' + BASIFY_COL_DATE + '"]) { id text } } } } } }';
+    const data = await mondayQuery(query);
+    if (data.data && data.data.boards && data.data.boards[0]) {
+      const groups = data.data.boards[0].groups;
+      if (groups && groups[0] && groups[0].items_page) {
+        const allItems = groups[0].items_page.items;
+        // Filter by date column or created_at, whichever is more recent
+        const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+        const recent = allItems.filter(function(item) {
+          var dateCol = item.column_values.find(function(c) { return c.id === BASIFY_COL_DATE; });
+          var dateVal = dateCol && dateCol.text ? new Date(dateCol.text + 'T23:59:59').getTime() : 0;
+          var createdVal = new Date(item.created_at).getTime();
+          return Math.max(dateVal, createdVal) >= cutoff;
+        });
+        // Take up to 5 most recent
+        basifyState.roBatches = recent.slice(-5).map(function(item) {
+          var nameCol = item.column_values.find(function(c) { return c.id === BASIFY_COL_BATCH_NAME; });
+          return {
+            id: item.id,
+            name: item.name,
+            batchName: (nameCol && nameCol.text) ? nameCol.text : item.name,
+            createdAt: item.created_at
+          };
+        });
+        renderROBatches();
+        return;
+      }
+    }
+    container.innerHTML = '<div class="empty-state" style="padding:20px;"><div class="empty-state-text">No RO system batches found.</div></div>';
+  } catch(err) {
+    console.error('Fetch RO batches error:', err);
+    container.innerHTML = '<div class="empty-state" style="padding:20px;"><div class="empty-state-text">Could not connect to Monday.com.</div></div>';
+  }
+}
+
+function renderROBatches() {
+  const container = document.getElementById('basifyROList');
+  if (basifyState.roBatches.length === 0) {
+    container.innerHTML = '<div class="empty-state" style="padding:20px;"><div class="empty-state-text">No RO batches in the last 24 hours.</div></div>';
+    return;
+  }
+  container.innerHTML = basifyState.roBatches.map(function(b) {
+    return '<div class="basify-ro-item"><div class="ro-name">' + escHtml(b.batchName) + '</div><div class="ro-date">' + formatDateShort(b.createdAt) + '</div></div>';
+  }).join('');
+}
+
+function generateFBBatchName() {
+  const now = new Date();
+  const op = document.getElementById('basifyOperator').value || state.currentOperator || 'OP';
+  const initial = op.charAt(0).toUpperCase();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const seq = (state.basifyCompletedToday || 0) + 1;
+  return initial + '.' + month + '/' + day + '.FB' + seq;
+}
+
+async function finishBasifyBatch() {
+  if (!basifyState.running) return;
+  if (basifyState.timerInterval) { clearInterval(basifyState.timerInterval); basifyState.timerInterval = null; }
+  const endTime = new Date();
+  const startTime = new Date(basifyState.startTime);
+  const elapsed = Math.floor((endTime - startTime) / 1000);
+  const h = Math.floor(elapsed / 3600);
+  const m = Math.floor((elapsed % 3600) / 60);
+  const durationStr = h + 'h ' + m + 'm';
+  const operator = document.getElementById('basifyOperator').value || state.currentOperator || '';
+  const batchName = generateFBBatchName();
+  basifyState.currentBatchName = batchName;
+  const todayStr = new Date().toDateString();
+  if (state._basifyCountDate !== todayStr) { state.basifyCompletedToday = 0; state._basifyCountDate = todayStr; }
+  state.basifyCompletedToday = (state.basifyCompletedToday || 0) + 1;
+  saveState();
+  basifyState.running = false;
+  saveBasifyState();
+  showView('basifyCompleteView');
+  document.getElementById('basifyCompleteBatchName').textContent = batchName;
+  var summary = [
+    { label: 'Operator', value: operator },
+    { label: 'Start Time', value: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+    { label: 'End Time', value: endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+    { label: 'Duration', value: durationStr }
+  ];
+  document.getElementById('basifyCompleteSummary').innerHTML = summary.map(function(s) {
+    return '<div class="summary-item"><div class="label">' + s.label + '</div><div class="value">' + escHtml(s.value || '') + '</div></div>';
+  }).join('');
+  var roListEl = document.getElementById('basifyCompleteROList');
+  if (basifyState.roBatches.length > 0) {
+    roListEl.innerHTML = basifyState.roBatches.map(function(b) {
+      return '<div class="basify-ro-item"><div class="ro-name">' + escHtml(b.batchName) + '</div></div>';
+    }).join('');
+  } else {
+    roListEl.innerHTML = '<div style="font-size:0.8125rem;color:var(--text-muted);">No RO batches found.</div>';
+  }
+  var statusEl = 'mondayStatusBasifyComplete';
+  updateMondayStatusEl(statusEl, 'submitting', 'Creating FB batch on Monday.com...');
+  try {
+    var itemName = batchName.replace(/"/g, '\\"');
+    var now2 = new Date();
+    var dateStr = now2.getFullYear() + '-' + String(now2.getMonth()+1).padStart(2,'0') + '-' + String(now2.getDate()).padStart(2,'0');
+    var timeStr2 = now2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' (' + durationStr + ')';
+    var colVals = {};
+    colVals[BASIFY_COL_BATCH_NAME] = batchName;
+    colVals[BASIFY_COL_OPERATOR] = operator;
+    colVals[BASIFY_COL_TIME] = timeStr2;
+    colVals[BASIFY_COL_DATE] = { date: dateStr };
+    var colValStr = JSON.stringify(JSON.stringify(colVals));
+    var createMutation = 'mutation { create_item(board_id: ' + BASIFY_BOARD_ID + ', group_id: "' + BASIFY_GROUP_BASIFY + '", item_name: "' + itemName + '", column_values: ' + colValStr + ') { id } }';
+    var createResult = await mondayQuery(createMutation);
+    var newItemId = null;
+    if (createResult.data && createResult.data.create_item) { newItemId = createResult.data.create_item.id; }
+    if (!newItemId) { updateMondayStatusEl(statusEl, 'error', 'Could not create FB batch on Monday.com'); return; }
+    updateMondayStatusEl(statusEl, 'submitting', 'Adding RO batch sub-items...');
+    for (var i = 0; i < basifyState.roBatches.length; i++) {
+      var roBatch = basifyState.roBatches[i];
+      var subName = roBatch.batchName.replace(/"/g, '\\"');
+      var subMutation = 'mutation { create_subitem(parent_item_id: ' + newItemId + ', item_name: "' + subName + '") { id } }';
+      try { await mondayQuery(subMutation); } catch(subErr) { console.warn('Sub-item error:', subErr); }
+    }
+    updateMondayStatusEl(statusEl, 'submitting', 'Moving batch to Tank C...');
+    var moveMutation = 'mutation { move_item_to_group(item_id: ' + newItemId + ', group_id: "' + BASIFY_GROUP_TANKC + '") { id } }';
+    await mondayQuery(moveMutation);
+    updateMondayStatusEl(statusEl, 'success', 'FB batch created, sub-items added, moved to Tank C (Item #' + newItemId + ')');
+    toast('FB batch ' + batchName + ' complete!', 'success');
+  } catch(err) {
+    console.error('Monday basify error:', err);
+    updateMondayStatusEl(statusEl, 'error', 'Monday.com error: ' + (err.message || 'Unknown error'));
+  }
 }
 
 // ===== BOOT =====
