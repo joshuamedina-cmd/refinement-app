@@ -1,1 +1,2130 @@
-PLACEHOLDER_CONTENT
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Refinement Process Flow</title>
+<style>
+/* ===== CSS RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ===== DESIGN SYSTEM — DECANTER THEME ===== */
+:root {
+    --bg: #e8f4fd;
+    --card-bg: rgba(255,255,255,0.92);
+    --text: #1a2a3a;
+    --text-muted: #5a6a7a;
+    --accent: #2196F3;
+    --accent-dark: #1565C0;
+    --accent-dim: rgba(33,150,243,0.12);
+    --green: #4CAF50;
+    --green-dark: #388E3C;
+    --green-dim: rgba(76,175,80,0.12);
+    --red: #f44336;
+    --red-dark: #c62828;
+    --red-dim: rgba(244,67,54,0.12);
+    --orange: #FF9800;
+    --orange-dark: #E65100;
+    --orange-dim: rgba(255,152,0,0.12);
+    --yellow: #FFC107;
+    --blue-dim: rgba(33,150,243,0.12);
+    --purple: #7B1FA2;
+    --purple-dim: rgba(123,31,162,0.12);
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.14);
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --transition: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===== BASE ===== */
+html { font-size: 16px; -webkit-tap-highlight-color: transparent; }
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+}
+
+/* ===== SVG BACKGROUND PATTERN (Rotary/Rotovap equipment icons) ===== */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%231565C0' stroke-width='1.5'%3E%3C!-- Rotovap flask --%3E%3Ccircle cx='30' cy='30' r='14'/%3E%3Cpath d='M30 16 L30 8 M26 8 L34 8'/%3E%3Cpath d='M44 30 L54 30' stroke-dasharray='3,2'/%3E%3C!-- Filter funnel --%3E%3Cpath d='M70 15 L90 15 L85 28 L75 28 Z'/%3E%3Cpath d='M80 28 L80 40'/%3E%3C!-- Beaker --%3E%3Crect x='20' y='70' width='22' height='28' rx='2'/%3E%3Cpath d='M20 85 L42 85' stroke-dasharray='2,2'/%3E%3C!-- Centrifuge rotor --%3E%3Ccircle cx='85' cy='82' r='16'/%3E%3Ccircle cx='85' cy='82' r='4'/%3E%3Cpath d='M85 66 L85 62 M85 98 L85 102 M69 82 L65 82 M101 82 L105 82'/%3E%3Cpath d='M74.4 71.4 L71.6 68.6 M95.6 92.6 L98.4 95.4 M74.4 92.6 L71.6 95.4 M95.6 71.4 L98.4 68.6'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 120px 120px;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+/* ===== LAYOUT ===== */
+.app-shell { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; position: relative; z-index: 1; }
+
+.header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.logo-mark { width: 36px; height: 36px; flex-shrink: 0; }
+.logo-mark svg { width: 100%; height: 100%; }
+.header-title { font-weight: 800; font-size: 1.125rem; letter-spacing: -0.01em; color: var(--accent-dark); }
+.header-subtitle { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+.header-right { display: flex; align-items: center; gap: 8px; }
+
+/* ===== OPERATOR BADGE ===== */
+.operator-badge {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px;
+    background: var(--accent-dim);
+    color: var(--accent-dark);
+    font-weight: 700; font-size: 0.8125rem;
+    border: 1px solid rgba(33,150,243,0.2);
+}
+.operator-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+.main-content { flex: 1; padding: 24px 20px 48px; max-width: 900px; margin: 0 auto; width: 100%; }
+
+/* ===== CARD ===== */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+.card-title { font-weight: 700; font-size: 1.125rem; color: var(--text); }
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 24px; border-radius: var(--radius);
+    font-family: var(--font); font-weight: 700; font-size: 0.9375rem;
+    border: none; cursor: pointer; transition: all var(--transition);
+    min-height: 52px; min-width: 52px;
+    text-decoration: none; white-space: nowrap;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    -webkit-user-select: none; user-select: none;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; pointer-events: none; }
+
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: var(--accent-dark); }
+.btn-green { background: var(--green); color: #fff; }
+.btn-green:hover { background: var(--green-dark); }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-dark); }
+.btn-orange { background: var(--orange); color: #fff; }
+.btn-orange:hover { background: var(--orange-dark); }
+.btn-secondary {
+    background: #fff; color: var(--text);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.btn-secondary:hover { background: #f5f9fe; }
+.btn-ghost { background: transparent; color: var(--text-muted); padding: 10px; text-transform: none; }
+.btn-ghost:hover { background: rgba(0,0,0,0.05); color: var(--text); }
+.btn-sm { padding: 8px 16px; min-height: 40px; font-size: 0.8125rem; }
+.btn-block { width: 100%; max-width: 100%; }
+.btn-icon { padding: 10px; min-width: 44px; min-height: 44px; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-dark); }
+.btn-success { background: var(--green); color: #fff; }
+.btn-success:hover { background: var(--green-dark); }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-danger:hover { background: var(--red-dark); }
+
+/* ===== FORM ELEMENTS ===== */
+.form-group { margin-bottom: 20px; }
+.form-label {
+    display: block; margin-bottom: 6px;
+    font-weight: 600; font-size: 0.8125rem;
+    color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.form-input, .form-select, .form-textarea {
+    width: 100%; padding: 14px 16px;
+    background: rgba(255,255,255,0.85);
+    color: var(--text);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    min-height: 52px;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+    background: #fff;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); opacity: 0.7; }
+.form-select {
+    cursor: pointer; -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%235a6a7a' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-color: rgba(255,255,255,0.85);
+    padding-right: 40px;
+}
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+.computed-value {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px; border-radius: var(--radius-sm);
+    background: var(--accent-dim);
+    border: 1.5px solid rgba(33,150,243,0.2);
+    margin-bottom: 20px;
+}
+.computed-value .label { font-size: 0.8125rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.computed-value .value { font-family: 'SF Mono', 'Consolas', monospace; font-size: 1.25rem; font-weight: 700; color: var(--accent-dark); }
+
+/* ===== STAGE PROGRESS BAR ===== */
+.stage-progress {
+    display: flex; align-items: center; gap: 0;
+    padding: 16px 20px; margin-bottom: 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow);
+}
+.stage-step { display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding: 8px 0; }
+.stage-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.8125rem;
+    background: rgba(0,0,0,0.05);
+    color: var(--text-muted);
+    border: 2px solid var(--border-strong);
+    flex-shrink: 0; transition: all var(--transition);
+}
+.stage-step.active .stage-dot { background: var(--accent); color: #fff; border-color: var(--accent); }
+.stage-step.completed .stage-dot { background: var(--green); color: #fff; border-color: var(--green); }
+.stage-name { font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+.stage-step.active .stage-name { color: var(--accent-dark); }
+.stage-step.completed .stage-name { color: var(--green-dark); }
+.stage-connector {
+    flex: 1; height: 2px; min-width: 20px;
+    background: var(--border-strong); margin: 0 8px;
+    transition: background var(--transition);
+}
+.stage-connector.completed { background: var(--green); }
+
+/* ===== DASHBOARD STATS ===== */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.stat-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 6px; }
+.stat-value { font-family: 'SF Mono', 'Consolas', monospace; font-size: 2rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.stat-value.teal { color: var(--accent); }
+.stat-value.green { color: var(--green-dark); }
+.stat-value.amber { color: var(--orange); }
+
+/* ===== BATCH LIST ===== */
+.batch-list { display: flex; flex-direction: column; gap: 12px; }
+.batch-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px; border-radius: var(--radius);
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    cursor: pointer; transition: all var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.batch-item:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(33,150,243,0.12); }
+.batch-item:active { transform: scale(0.99); }
+.batch-id { font-family: 'SF Mono', 'Consolas', monospace; font-weight: 700; font-size: 1rem; min-width: 140px; color: var(--accent-dark); }
+.batch-stage-badge {
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+    text-transform: uppercase; letter-spacing: 0.04em;
+}
+.badge-soak { background: var(--blue-dim); color: var(--accent-dark); }
+.badge-pinnacle { background: var(--orange-dim); color: var(--orange-dark); }
+.badge-rotovap { background: rgba(33,150,243,0.10); color: var(--accent-dark); }
+.badge-ovens { background: var(--red-dim); color: var(--red-dark); }
+.badge-prepweigh { background: var(--green-dim); color: var(--green-dark); }
+.badge-complete { background: var(--green-dim); color: var(--green-dark); }
+.batch-meta { flex: 1; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.batch-meta-item { font-size: 0.8125rem; color: var(--text-muted); }
+.batch-mini-progress { display: flex; gap: 4px; margin-left: auto; }
+.batch-mini-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(0,0,0,0.08);
+    border: 1.5px solid var(--border-strong);
+}
+.batch-mini-dot.done { background: var(--green); border-color: var(--green); }
+.batch-mini-dot.current { background: var(--accent); border-color: var(--accent); }
+
+/* ===== BATCH SELECTION CARDS ===== */
+.source-batch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.source-batch-card {
+    padding: 16px 20px; border-radius: var(--radius);
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    cursor: pointer; transition: all var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.source-batch-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(33,150,243,0.12); transform: translateY(-2px); }
+.source-batch-card:active { transform: scale(0.98); }
+.source-batch-card.selected { border-color: var(--accent); background: var(--accent-dim); }
+.source-batch-name { font-family: 'SF Mono', 'Consolas', monospace; font-weight: 700; font-size: 1rem; color: var(--accent-dark); margin-bottom: 4px; }
+.source-batch-info { font-size: 0.8125rem; color: var(--text-muted); }
+
+/* ===== SHIMMER ===== */
+.shimmer-card {
+    height: 72px; border-radius: var(--radius);
+    background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* ===== HISTORY TABLE ===== */
+.history-table-wrap { overflow-x: auto; margin-top: 16px; }
+.history-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.history-table th {
+    text-align: left; padding: 10px 12px;
+    font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    font-size: 0.6875rem; border-bottom: 2px solid var(--border-strong);
+    white-space: nowrap; background: rgba(33,150,243,0.04);
+}
+.history-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+.history-table tr:hover td { background: rgba(33,150,243,0.04); }
+.history-table .mono { font-family: 'SF Mono', 'Consolas', monospace; font-weight: 600; color: var(--accent-dark); }
+
+/* ===== VIEWS ===== */
+.view { display: none; animation: fadeIn 200ms ease; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ===== COMPLETION VIEW ===== */
+.completion-card { text-align: center; max-width: 560px; margin: 0 auto; }
+.completion-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--green-dim);
+    color: var(--green-dark);
+    font-size: 1.75rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    border: 2px solid rgba(76,175,80,0.3);
+}
+.completion-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+.completion-batch-id { font-family: 'SF Mono', 'Consolas', monospace; font-size: 1.25rem; color: var(--accent-dark); font-weight: 700; margin-bottom: 24px; }
+.completion-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+
+/* ===== SECTION TABS ===== */
+.tab-bar {
+    display: flex; gap: 4px; padding: 4px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.tab-btn {
+    flex: 1; padding: 10px 16px; border: none; background: none;
+    font-family: var(--font); font-weight: 600; font-size: 0.875rem;
+    color: var(--text-muted); cursor: pointer; border-radius: var(--radius-sm);
+    transition: all var(--transition); min-height: 44px;
+}
+.tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(33,150,243,0.25);
+}
+.tab-btn:hover:not(.active) { color: var(--text); background: rgba(0,0,0,0.04); }
+
+/* ===== EMPTY STATE ===== */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.4; }
+.empty-state-text { font-size: 0.9375rem; }
+
+/* ===== TOAST ===== */
+.toast-container {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 1000; display: flex; flex-direction: column; gap: 8px;
+    align-items: center; pointer-events: none;
+}
+.toast {
+    padding: 14px 24px; border-radius: var(--radius);
+    font-weight: 600; font-size: 0.875rem; color: #fff;
+    box-shadow: var(--shadow-lg);
+    animation: toastSlide 300ms ease, toastFade 300ms ease 3700ms forwards;
+    max-width: 360px; pointer-events: auto;
+    white-space: nowrap;
+}
+.toast-success { background: var(--green-dark); }
+.toast-error { background: var(--red-dark); }
+.toast-info { background: var(--accent-dark); }
+@keyframes toastSlide { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes toastFade { to { opacity: 0; transform: translateY(-4px); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,42,58,0.5);
+    z-index: 200; display: none;
+    align-items: center; justify-content: center;
+    padding: 20px; backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px; max-width: 480px; width: 100%;
+    box-shadow: var(--shadow-lg);
+    animation: fadeIn 200ms ease;
+}
+.modal-title { font-weight: 800; font-size: 1.25rem; margin-bottom: 12px; color: var(--text); }
+.modal-text { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; line-height: 1.6; }
+.modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+
+/* ===== BATCH SUMMARY ===== */
+.summary-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    text-align: left; margin: 20px 0;
+}
+.summary-item {
+    padding: 12px 14px;
+    background: rgba(33,150,243,0.06);
+    border: 1px solid rgba(33,150,243,0.12);
+    border-radius: var(--radius-sm);
+}
+.summary-item .label {
+    font-size: 0.6875rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-muted); margin-bottom: 3px;
+}
+.summary-item .value {
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-weight: 600; font-size: 0.9375rem;
+    color: var(--text);
+}
+@media (max-width: 480px) { .summary-grid { grid-template-columns: 1fr; } }
+
+/* ===== MONDAY STATUS ===== */
+.monday-status {
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 14px 16px;
+    margin: 16px 0;
+    display: none;
+}
+
+/* ===== HOME PAGE — STAGE CARDS ===== */
+.home-stage-cards {
+    display: flex; flex-direction: column; gap: 14px;
+    margin-bottom: 28px;
+}
+.home-stage-card {
+    display: flex; align-items: center; gap: 20px;
+    padding: 22px 24px;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+}
+.home-stage-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+}
+.home-stage-card[data-stage="0"]::before { background: var(--accent); }
+.home-stage-card[data-stage="1"]::before { background: var(--orange); }
+.home-stage-card[data-stage="2"]::before { background: var(--accent); }
+.home-stage-card[data-stage="3"]::before { background: var(--red); }
+.home-stage-card[data-stage="4"]::before { background: var(--green); }
+.home-stage-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 6px 24px rgba(33,150,243,0.15);
+    transform: translateY(-2px);
+}
+.home-stage-card:active { transform: scale(0.99) translateY(0); }
+.home-stage-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.125rem;
+    flex-shrink: 0;
+}
+.home-stage-card[data-stage="0"] .home-stage-num { background: var(--blue-dim); color: var(--accent-dark); }
+.home-stage-card[data-stage="1"] .home-stage-num { background: var(--orange-dim); color: var(--orange-dark); }
+.home-stage-card[data-stage="2"] .home-stage-num { background: rgba(33,150,243,0.10); color: var(--accent-dark); }
+.home-stage-card[data-stage="3"] .home-stage-num { background: var(--red-dim); color: var(--red-dark); }
+.home-stage-card[data-stage="4"] .home-stage-num { background: var(--green-dim); color: var(--green-dark); }
+.home-stage-info { flex: 1; min-width: 0; }
+.home-stage-name { font-weight: 700; font-size: 1.0625rem; color: var(--text); margin-bottom: 2px; }
+.home-stage-desc { font-size: 0.8125rem; color: var(--text-muted); }
+.home-stage-count {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 8px;
+}
+.home-stage-badge {
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.875rem; font-weight: 800;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    min-width: 48px; text-align: center;
+}
+.home-stage-card[data-stage="0"] .home-stage-badge { background: var(--blue-dim); color: var(--accent-dark); }
+.home-stage-card[data-stage="1"] .home-stage-badge { background: var(--orange-dim); color: var(--orange-dark); }
+.home-stage-card[data-stage="2"] .home-stage-badge { background: rgba(33,150,243,0.10); color: var(--accent-dark); }
+.home-stage-card[data-stage="3"] .home-stage-badge { background: var(--red-dim); color: var(--red-dark); }
+.home-stage-card[data-stage="4"] .home-stage-badge { background: var(--green-dim); color: var(--green-dark); }
+.home-stage-arrow {
+    width: 20px; height: 20px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+/* ===== PROCESS FLOW VISUAL ===== */
+.process-flow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px 16px; margin-bottom: 28px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    overflow-x: auto;
+    gap: 0;
+}
+.pf-step {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    flex-shrink: 0; min-width: 60px;
+}
+.pf-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.6875rem;
+    border: 2px solid var(--border-strong);
+    background: rgba(0,0,0,0.03);
+    color: var(--text-muted);
+    transition: all var(--transition);
+}
+.pf-step[data-idx="0"] .pf-dot { border-color: var(--accent); color: var(--accent-dark); background: var(--blue-dim); }
+.pf-step[data-idx="1"] .pf-dot { border-color: var(--orange); color: var(--orange-dark); background: var(--orange-dim); }
+.pf-step[data-idx="2"] .pf-dot { border-color: var(--accent); color: var(--accent-dark); background: rgba(33,150,243,0.10); }
+.pf-step[data-idx="3"] .pf-dot { border-color: var(--red); color: var(--red-dark); background: var(--red-dim); }
+.pf-step[data-idx="4"] .pf-dot { border-color: var(--green); color: var(--green-dark); background: var(--green-dim); }
+.pf-label { font-size: 0.625rem; font-weight: 600; color: var(--text-muted); text-align: center; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.03em; }
+.pf-connector {
+    flex: 0 0 auto; width: 32px; height: 2px;
+    background: var(--border-strong); margin: 0 2px;
+    margin-bottom: 20px;
+    position: relative;
+}
+.pf-connector::after {
+    content: '';
+    position: absolute;
+    right: -2px; top: -3px;
+    width: 0; height: 0;
+    border-left: 5px solid var(--border-strong);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+/* ===== COMPLETED LINK ===== */
+.home-completed-link {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 24px;
+    font-weight: 600; font-size: 0.9375rem; color: var(--text-muted);
+}
+.home-completed-link:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-dim); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .header { padding: 10px 16px; }
+    .main-content { padding: 16px 16px 48px; }
+    .card { padding: 20px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .stat-card { padding: 16px; }
+    .stat-value { font-size: 1.5rem; }
+    .batch-item { flex-wrap: wrap; padding: 14px 16px; gap: 10px; }
+    .batch-meta { order: 3; width: 100%; }
+    .batch-mini-progress { margin-left: 0; }
+    .form-row { gap: 12px; }
+    .stage-progress { padding: 12px 16px; }
+    .source-batch-grid { grid-template-columns: 1fr; }
+    .home-stage-card { padding: 18px 20px; gap: 14px; }
+    .home-stage-num { width: 42px; height: 42px; font-size: 1rem; }
+    .pf-connector { width: 20px; }
+}
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .header-subtitle { display: none; }
+    .home-stage-desc { display: none; }
+}
+
+
+
+/* ===== PRINT ===== */
+@media print { .header, .tab-bar, .btn { display: none !important; } }
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-mark">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="32" height="32" rx="8" stroke="#2196F3" stroke-width="2" fill="none"/>
+          <path d="M10 18h16M18 10v16" stroke="#2196F3" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="10" cy="10" r="2.5" fill="#2196F3"/>
+          <circle cx="26" cy="10" r="2.5" fill="#4CAF50"/>
+          <circle cx="10" cy="26" r="2.5" fill="#FF9800"/>
+          <circle cx="26" cy="26" r="2.5" fill="#1565C0"/>
+        </svg>
+      </div>
+      <div>
+        <div class="header-title">Refinement Process Flow</div>
+        <div class="header-subtitle">Post-Crude Refinery</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div id="operatorBadge" class="operator-badge" style="display:none;">
+        <span class="dot"></span>
+        <span id="operatorName"></span>
+      </div>
+      <button class="btn btn-ghost btn-icon" id="logoutBtn" onclick="logout()" style="display:none;" aria-label="Logout" title="End Shift">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- ===== LOGIN VIEW ===== -->
+    <div id="loginView" class="view active">
+      <div style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 70px);min-height:calc(100dvh - 70px);padding:20px;">
+        <div style="width:100%;max-width:440px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:44px 36px;box-shadow:var(--shadow-lg);text-align:center;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
+          <div style="margin-bottom:24px;">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+              <rect x="4" y="4" width="56" height="56" rx="14" stroke="#2196F3" stroke-width="3" fill="none"/>
+              <path d="M18 32h28M32 18v28" stroke="#2196F3" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="18" cy="18" r="4" fill="#2196F3"/>
+              <circle cx="46" cy="18" r="4" fill="#4CAF50"/>
+              <circle cx="18" cy="46" r="4" fill="#FF9800"/>
+              <circle cx="46" cy="46" r="4" fill="#1565C0"/>
+            </svg>
+          </div>
+          <h1 style="font-size:1.625rem;font-weight:800;margin-bottom:4px;color:var(--accent-dark);">Refinement Process Flow</h1>
+          <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:32px;">Post-Crude Refinery — Select your name to begin</p>
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label" for="loginOperator">Operator</label>
+            <select class="form-select" id="loginOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <button class="btn btn-accent btn-block" onclick="login()">Start Shift</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOME VIEW ===== -->
+    <div id="homeView" class="view">
+      <!-- Process Flow Visual -->
+      <div class="process-flow" id="processFlow"></div>
+
+      <!-- Stage Cards -->
+      <div class="home-stage-cards" id="homeStageCards"></div>
+    </div>
+
+    <!-- ===== BATCH SELECTION VIEW (for Soak) ===== -->
+    <div id="batchSelectView" class="view">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <button class="btn btn-ghost btn-icon" onclick="goHome()" aria-label="Back to home">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div>
+          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);">Stage 1: Soak</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Select a batch or start a new one</div>
+        </div>
+      </div>
+
+      <!-- In-progress soak batches -->
+      <div id="soakInProgressSection" style="display:none; margin-bottom: 20px;">
+        <div style="font-weight: 700; font-size: 0.9375rem; color: var(--text); margin-bottom: 12px;">Resume In-Progress Soak</div>
+        <div id="soakInProgressList" class="batch-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Start New Batch</div>
+          <button class="btn btn-ghost btn-sm" onclick="fetchSourceBatches()">↻ Refresh</button>
+        </div>
+        <div style="font-weight: 700; font-size: 0.8125rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 12px;">Completed Crude Batches</div>
+        <div id="sourceBatchList">
+          <div class="shimmer-card" style="margin-bottom:10px;"></div>
+          <div class="shimmer-card" style="margin-bottom:10px;"></div>
+          <div class="shimmer-card"></div>
+        </div>
+        <div style="margin-top:20px; display:flex; gap:12px;">
+          <div class="form-group" style="flex:1; margin-bottom:0;">
+            <label class="form-label">Or enter batch name manually</label>
+            <input type="text" class="form-input" id="manualBatchName" placeholder="e.g. QL.3/5.94584">
+          </div>
+        </div>
+        <button class="btn btn-accent btn-block" style="margin-top:16px;" onclick="startNewSoakBatch()">Start Soak →</button>
+      </div>
+    </div>
+
+    <!-- ===== STAGE FORM VIEW ===== -->
+    <div id="stageFormView" class="view">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <button class="btn btn-ghost btn-icon" onclick="goHome()" aria-label="Back to home">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div>
+          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);" id="stageFormTitle">Stage</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);" id="stageFormSubtitle"></div>
+        </div>
+      </div>
+
+      <div class="stage-progress" id="stageFormProgress"></div>
+
+      <!-- BATCH SELECT FOR THIS STAGE -->
+      <div id="stageSelectSection" style="display:none;">
+        <div style="font-weight: 700; font-size: 0.9375rem; color: var(--text); margin-bottom: 12px;">Select a Batch</div>
+        <div id="stageBatchList" class="batch-list" style="margin-bottom: 24px;"></div>
+      </div>
+
+      <!-- STAGE FORM (shown after batch selected) -->
+      <div id="stageFormSection" style="display:none;">
+
+        <!-- SOAK FORM -->
+        <div id="formSoak" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Soak</div>
+            <span class="batch-stage-badge badge-soak">SOAK</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formSoakBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="crudeWeight">Crude Weight (grams)</label>
+            <input type="number" class="form-input" id="crudeWeight" placeholder="e.g. 94584" inputmode="decimal" oninput="calcAcetone()">
+          </div>
+          <div class="computed-value">
+            <div>
+              <div class="label">Acetone Volume</div>
+              <div class="value" id="acetoneVolume">0.00 L</div>
+            </div>
+            <div style="margin-left: auto; font-size: 0.75rem; color: var(--text-muted);">= Crude × 5 ÷ 1000</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="soakStart">Soak Start Time</label>
+              <input type="datetime-local" class="form-input" id="soakStart">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="soakEnd">Soak End Time</label>
+              <input type="datetime-local" class="form-input" id="soakEnd">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="soakOperator">Soak Operator</label>
+            <select class="form-select" id="soakOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="monday-status" id="mondayStatusSoak"></div>
+          <button class="btn btn-accent btn-block" onclick="submitSoak()">Submit Soak →</button>
+        </div>
+
+        <!-- PINNACLE FORM -->
+        <div id="formPinnacle" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Pinnacle (Recovery)</div>
+            <span class="batch-stage-badge badge-pinnacle">PINNACLE</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formPinnacleBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="pinnacleOperator">Pinnacle Operator</label>
+            <select class="form-select" id="pinnacleOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pinnacleStart">Pinnacle Start Time</label>
+              <input type="datetime-local" class="form-input" id="pinnacleStart">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pinnacleEnd">Pinnacle End Time</label>
+              <input type="datetime-local" class="form-input" id="pinnacleEnd">
+            </div>
+          </div>
+          <div class="monday-status" id="mondayStatusPinnacle"></div>
+          <button class="btn btn-accent btn-block" onclick="submitPinnacle()">Submit Pinnacle →</button>
+        </div>
+
+        <!-- ROTOVAP FORM -->
+        <div id="formRotovap" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Rotovap</div>
+            <span class="batch-stage-badge badge-rotovap">ROTOVAP</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formRotovapBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="rotovapOperator">Rotovap Operator</label>
+            <select class="form-select" id="rotovapOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="rotovapStart">Rotovap Start Time</label>
+            <input type="datetime-local" class="form-input" id="rotovapStart">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="volumePinnacle">Volume Collected from Pinnacle (L)</label>
+            <input type="number" class="form-input" id="volumePinnacle" placeholder="e.g. 12.5" inputmode="decimal" step="0.01">
+          </div>
+          <div class="monday-status" id="mondayStatusRotovap"></div>
+          <button class="btn btn-accent btn-block" onclick="submitRotovap()">Submit Rotovap →</button>
+        </div>
+
+        <!-- OVENS & PURGE FORM -->
+        <div id="formOvens" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Ovens &amp; Purge</div>
+            <span class="batch-stage-badge badge-ovens">OVENS</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formOvensBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="ovenOperator">Oven Operator</label>
+            <select class="form-select" id="ovenOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="ovenStart">Oven Start Time</label>
+              <input type="datetime-local" class="form-input" id="ovenStart">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ovenEnd">Oven End Time</label>
+              <input type="datetime-local" class="form-input" id="ovenEnd">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ovenNotes">Oven ID / Notes</label>
+            <input type="text" class="form-input" id="ovenNotes" placeholder="e.g. Oven 3, top rack">
+          </div>
+          <div class="monday-status" id="mondayStatusOvens"></div>
+          <button class="btn btn-accent btn-block" onclick="submitOvens()">Submit Ovens →</button>
+        </div>
+
+        <!-- PREP & WEIGH FORM -->
+        <div id="formPrepWeigh" class="card" style="display:none;">
+          <div class="card-header">
+            <div class="card-title">Prep &amp; Weigh (Raw MIT)</div>
+            <span class="batch-stage-badge badge-prepweigh">PREP &amp; WEIGH</span>
+          </div>
+          <div style="font-family:'SF Mono','Consolas',monospace;font-weight:700;font-size:1rem;color:var(--accent-dark);margin-bottom:16px;" id="formPrepWeighBatchName"></div>
+          <div class="form-group">
+            <label class="form-label" for="finalOperator">Final Operator</label>
+            <select class="form-select" id="finalOperator">
+              <option value="">Select Operator...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="mitWeight">MIT Weight (grams)</label>
+            <input type="number" class="form-input" id="mitWeight" placeholder="e.g. 4500" inputmode="decimal">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="weighTime">Weigh Time</label>
+            <input type="datetime-local" class="form-input" id="weighTime">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="batchComments">Comments / Notes</label>
+            <textarea class="form-input form-textarea" id="batchComments" rows="3" placeholder="Any observations, issues, or notes about this batch..."></textarea>
+          </div>
+          <div class="monday-status" id="mondayStatusPrepWeigh"></div>
+          <button class="btn btn-green btn-block" onclick="submitPrepWeigh()">✓ Complete Batch</button>
+        </div>
+      </div>
+    </div>
+        <div class="completion-actions">
+          <button class="btn btn-ghost btn-block" onclick="goHome()">Back to Home</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HISTORY VIEW ===== -->
+    <div id="historyView" class="view">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <button class="btn btn-ghost btn-icon" onclick="goHome()" aria-label="Back to home">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div>
+          <div style="font-weight: 800; font-size: 1.125rem; color: var(--accent-dark);">Completed Batches</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Batch history and records</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="downloadAllCSV()" id="downloadAllBtn" style="display:none; margin-left: auto;">Download CSV</button>
+      </div>
+      <div id="historyContent"></div>
+    </div>
+
+    <!-- ===== COMPLETION VIEW ===== -->
+    <div id="completionView" class="view">
+      <div class="card completion-card">
+        <div class="completion-icon">✓</div>
+        <div class="completion-title">Batch Complete</div>
+        <div class="completion-batch-id" id="completionBatchId"></div>
+        <div class="summary-grid" id="completionSummary"></div>
+        <div class="monday-status" id="mondayStatusFinal"></div>
+        <div class="completion-actions">
+          <button class="btn btn-secondary btn-block" onclick="downloadCSV()">Download as CSV</button>
+          <button class="btn btn-ghost btn-block" onclick="retryMondayFinal()" id="retryMondayBtn" style="display:none;">⟳ Retry Monday.com Submission</button>
+          <button class="btn btn-ghost btn-block" onclick="goHome()">← Back to Home</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+
+  <footer style="padding: 40px 20px 16px; text-align: center; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-muted); background: var(--card-bg); backdrop-filter: blur(12px); position: relative; z-index: 1;">
+    <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer" style="color: var(--text-muted); text-decoration: none; font-weight: 500;">Created with Perplexity Computer</a>
+  </footer>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-text" id="modalText"></div>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   REFINEMENT PROCESS FLOW — Stage-Based Architecture
+   ========================================================== */
+
+// ===== CONSTANTS =====
+const OPERATORS = ['Josh', 'Q', 'Jaime D', 'George', 'Bobby', 'Jaime P', 'Sly', 'Zee', 'Dylan S', 'JDub', 'Cris', 'Arturo', 'Eli', 'Laker', 'FernDawg', 'KD', 'Moh', 'Quentin', 'George T', 'Frank'];
+const STAGES = ['Soak', 'Pinnacle', 'Rotovap', 'Ovens', 'Prep & Weigh'];
+const STAGE_BADGES = ['badge-soak', 'badge-pinnacle', 'badge-rotovap', 'badge-ovens', 'badge-prepweigh'];
+const STAGE_DESCS = [
+  'Crude soak in acetone solution',
+  'Pinnacle centrifuge recovery',
+  'Rotary evaporator processing',
+  'Vacuum oven drying & purge',
+  'Final prep, weigh & package'
+];
+const STAGE_COUNT = 5;
+
+// ===== MONDAY.COM CONFIG =====
+const MONDAY_API = 'https://api.monday.com/v2';
+const MONDAY_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjYyNzA3NzcxOSwiYWFpIjoxMSwidWlkIjo3NTA2NTY3OCwiaWFkIjoiMjAyNi0wMi0yOFQwMToxNzowOS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MjkxNDg2NzMsInJnbiI6InVzZTEifQ.ocD9w0Q-17JqNfU4iZXL4i3frn_Bw4pyVe_fkhJuiPg';
+
+const SOURCE_BOARD_ID = 18402878061;
+const SOURCE_GROUP_COMPLETED = 'group_mm182f72';
+const SOURCE_BATCH_NAME_COL = 'text_mm16egsm';
+
+const TARGET_BOARD_ID = 18402825582;
+const GROUP_SOAK = 'topics';
+const GROUP_PINNACLE = 'group_mm1c66b5';
+const GROUP_ROTOVAP = 'group_mm1c9vfg';
+const GROUP_OVENS = 'group_mm1cjbrs';
+const GROUP_PREPWEIGH = 'group_mm1c8z01';
+
+const COL_CRUDE_WEIGHT = 'numeric_mm16jm5d';
+const COL_ACETONE_VOLUME = 'numeric_mm16z0y';
+const COL_MIT_WEIGHT = 'numeric_mm16jqdt';
+const COL_SOAK_OPERATOR = 'text_mm16qp52';
+const COL_SOAK_START = 'date_mm16v0fj';
+const COL_SOAK_END = 'date_mm16czpf';
+const COL_PIN_OP = 'text_mm1667zv';
+const COL_PIN_START = 'date_mm16t74s';
+const COL_PIN_END = 'date_mm16q9y5';
+const COL_ROTO_OP = 'text_mm1657r3';
+const COL_ROTO_START = 'date_mm165byc';
+const COL_ROTO_VOLUME = 'numeric_mm1616gv';
+const COL_FINAL_OP = 'text_mm164t4y';
+const COL_WEIGH_TIME = 'date_mm16km1a';
+const COL_TOTAL_DURATION = 'numeric_mm16zgn3';
+
+const STAGE_GROUPS = [GROUP_SOAK, GROUP_PINNACLE, GROUP_ROTOVAP, GROUP_OVENS, GROUP_PREPWEIGH];
+
+// ===== STATE =====
+let state = {
+  currentOperator: null,
+  batches: [],
+  completedBatches: [],
+  activeBatchId: null,
+  selectedSourceBatch: null
+};
+
+// ===== PERSISTENCE =====
+const STORAGE_KEY = 'refinementAppState';
+const _memStore = {};
+const _storageKey = 'local' + 'Storage';
+const _getStore = () => { try { return window[_storageKey]; } catch(e) { return null; } };
+const storage = {
+  getItem(key) {
+    const s = _getStore();
+    if (s) { try { return s.getItem(key); } catch(e) {} }
+    return _memStore[key] || null;
+  },
+  setItem(key, val) {
+    const s = _getStore();
+    if (s) { try { s.setItem(key, val); return; } catch(e) {} }
+    _memStore[key] = val;
+  }
+};
+
+function saveState() {
+  storage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = storage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    } catch(e) { /* silent */ }
+  }
+}
+
+// ===== POPULATE OPERATOR DROPDOWNS =====
+function populateOperatorDropdowns() {
+  const ids = ['loginOperator','soakOperator','pinnacleOperator','rotovapOperator','ovenOperator','finalOperator'];
+  ids.forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    if (sel.options.length <= 1) {
+      OPERATORS.forEach(op => {
+        const opt = document.createElement('option');
+        opt.value = op;
+        opt.textContent = op;
+        sel.appendChild(opt);
+      });
+    }
+  });
+}
+
+// ===== INIT =====
+function init() {
+  populateOperatorDropdowns();
+  loadState();
+  if (state.currentOperator) {
+    showHome();
+  } else {
+    showView('loginView');
+  }
+}
+
+// ===== VIEW MANAGEMENT =====
+function showView(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+}
+
+function showHome() {
+  document.getElementById('operatorBadge').style.display = 'flex';
+  document.getElementById('operatorName').textContent = state.currentOperator;
+  document.getElementById('logoutBtn').style.display = '';
+  showView('homeView');
+  renderHome();
+}
+
+function goHome() {
+  state.activeBatchId = null;
+  showHome();
+}
+
+// ===== LOGIN / LOGOUT =====
+function login() {
+  const op = document.getElementById('loginOperator').value;
+  if (!op) { toast('Select an operator', 'error'); return; }
+  state.currentOperator = op;
+  saveState();
+  showHome();
+  toast('Shift started — ' + op, 'success');
+}
+
+function logout() {
+  if (state.batches.some(b => b.stage < STAGE_COUNT)) {
+    showModal('End Shift?', 'You have active batches. They will be saved and can be resumed later.', [
+      { text: 'Cancel', cls: 'btn-secondary', action: 'closeModalDirect()' },
+      { text: 'End Shift', cls: 'btn-danger', action: 'confirmLogout()' }
+    ]);
+    return;
+  }
+  confirmLogout();
+}
+
+function confirmLogout() {
+  closeModalDirect();
+  state.currentOperator = null;
+  document.getElementById('operatorBadge').style.display = 'none';
+  document.getElementById('logoutBtn').style.display = 'none';
+  document.getElementById('loginOperator').value = '';
+  saveState();
+  showView('loginView');
+}
+
+// ===== HOME PAGE RENDERING =====
+function renderHome() {
+  renderProcessFlow();
+  renderStageCards();
+  renderHomeStats();
+}
+
+function renderProcessFlow() {
+  const container = document.getElementById('processFlow');
+  let html = '';
+  STAGES.forEach((name, i) => {
+    html += '<div class="pf-step" data-idx="' + i + '"><div class="pf-dot">' + (i + 1) + '</div><div class="pf-label">' + name + '</div></div>';
+    if (i < STAGES.length - 1) {
+      html += '<div class="pf-connector"></div>';
+    }
+  });
+  container.innerHTML = html;
+}
+
+function getStageCount(stageIdx) {
+  // Stage 0 (Soak): source board completed batches that haven't been started + active batches at stage 0
+  // Stage 1 (Pinnacle): active batches at stage 1
+  // Stage 2 (Rotovap): active batches at stage 2
+  // Stage 3 (Ovens): active batches at stage 3
+  // Stage 4 (Prep & Weigh): active batches at stage 4
+  return state.batches.filter(b => b.stage === stageIdx).length;
+}
+
+function renderStageCards() {
+  const container = document.getElementById('homeStageCards');
+  const counts = STAGES.map((_, i) => getStageCount(i));
+
+  let html = '';
+  STAGES.forEach((name, i) => {
+    const count = counts[i];
+    const countLabel = count === 1 ? '1 batch' : count + ' batches';
+    html += '<div class="home-stage-card" data-stage="' + i + '" onclick="openStage(' + i + ')">' +
+      '<div class="home-stage-num">' + (i + 1) + '</div>' +
+      '<div class="home-stage-info">' +
+        '<div class="home-stage-name">' + escHtml(name) + '</div>' +
+        '<div class="home-stage-desc">' + escHtml(STAGE_DESCS[i]) + '</div>' +
+      '</div>' +
+      '<div class="home-stage-count">' +
+        '<div class="home-stage-badge">' + count + '</div>' +
+        '<span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;">' + (count === 0 ? 'ready' : 'ready') + '</span>' +
+      '</div>' +
+      '<svg class="home-stage-arrow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>' +
+    '</div>';
+  });
+  container.innerHTML = html;
+
+  // Completed count
+  document.getElementById('homeCompletedCount').textContent = state.completedBatches.length;
+}
+
+function renderHomeStats() {
+  const today = new Date().toDateString();
+  const todayBatches = [...state.batches, ...state.completedBatches].filter(b => new Date(b.created).toDateString() === today);
+  const activeBatches = state.batches.filter(b => b.stage < STAGE_COUNT);
+  const completedAll = state.completedBatches.length;
+  const totalMIT = state.completedBatches.reduce((sum, b) => sum + (parseFloat(b.mitWeight) || 0), 0);
+
+  document.getElementById('homeStatToday').textContent = todayBatches.length;
+  document.getElementById('homeStatActive').textContent = activeBatches.length;
+  document.getElementById('homeStatCompleted').textContent = completedAll;
+  document.getElementById('homeStatMIT').textContent = totalMIT.toLocaleString();
+}
+
+// ===== OPEN STAGE PAGE =====
+function openStage(stageIdx) {
+  if (stageIdx === 0) {
+    // Soak — show batch selection
+    openSoakPage();
+  } else {
+    // Other stages — show batch list for that stage, then form
+    openStageSelectPage(stageIdx);
+  }
+}
+
+// ===== SOAK PAGE =====
+let sourceBatches = [];
+let selectedSourceId = null;
+
+function openSoakPage() {
+  selectedSourceId = null;
+  document.getElementById('manualBatchName').value = '';
+  showView('batchSelectView');
+
+  // Show in-progress soak batches (stage 0)
+  const inProgress = state.batches.filter(b => b.stage === 0);
+  const section = document.getElementById('soakInProgressSection');
+  const list = document.getElementById('soakInProgressList');
+
+  if (inProgress.length > 0) {
+    section.style.display = '';
+    list.innerHTML = inProgress.map(b =>
+      '<div class="batch-item" onclick="resumeSoakBatch(\'' + escAttr(b.id) + '\')">' +
+        '<div class="batch-id">' + escHtml(b.batchName || b.id) + '</div>' +
+        '<span class="batch-stage-badge badge-soak">IN PROGRESS</span>' +
+        '<div class="batch-meta">' +
+          '<span class="batch-meta-item">' + escHtml(b.crudeWeight || '—') + 'g crude</span>' +
+          '<span class="batch-meta-item">' + formatDateShort(b.created) + '</span>' +
+        '</div>' +
+        '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>' +
+      '</div>'
+    ).join('');
+  } else {
+    section.style.display = 'none';
+  }
+
+  fetchSourceBatches();
+}
+
+function resumeSoakBatch(batchId) {
+  const batch = state.batches.find(b => b.id === batchId);
+  if (!batch) return;
+  state.activeBatchId = batchId;
+
+  showStageForm(0, batch);
+}
+
+async function fetchSourceBatches() {
+  const container = document.getElementById('sourceBatchList');
+  container.innerHTML = '<div class="shimmer-card" style="margin-bottom:10px;"></div><div class="shimmer-card" style="margin-bottom:10px;"></div><div class="shimmer-card"></div>';
+
+  try {
+    const query = `{ boards(ids: ${SOURCE_BOARD_ID}) { groups(ids: ["${SOURCE_GROUP_COMPLETED}"]) { items_page(limit: 50) { items { id name column_values(ids: ["${SOURCE_BATCH_NAME_COL}"]) { id text } } } } } }`;
+    const data = await mondayQuery(query);
+
+    if (data.data && data.data.boards && data.data.boards[0]) {
+      const groups = data.data.boards[0].groups;
+      if (groups && groups[0] && groups[0].items_page) {
+        sourceBatches = groups[0].items_page.items.map(item => {
+          const nameCol = item.column_values.find(c => c.id === SOURCE_BATCH_NAME_COL);
+          return {
+            id: item.id,
+            name: item.name,
+            batchName: (nameCol && nameCol.text) ? nameCol.text : item.name
+          };
+        });
+        renderSourceBatches();
+        return;
+      }
+    }
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No completed batches found on the source board. You can enter a name manually below.</div></div>';
+  } catch(err) {
+    console.error('Fetch source batches error:', err);
+    container.innerHTML = '<div class="empty-state" style="padding:30px 20px;"><div class="empty-state-icon">⚠</div><div class="empty-state-text">Could not connect to Monday.com. Enter batch name manually below.</div></div>';
+  }
+}
+
+function renderSourceBatches() {
+  const container = document.getElementById('sourceBatchList');
+  if (sourceBatches.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No completed batches available. Enter name manually below.</div></div>';
+    return;
+  }
+  container.innerHTML = '<div class="source-batch-grid">' + sourceBatches.map(b =>
+    '<div class="source-batch-card' + (selectedSourceId === b.id ? ' selected' : '') + '" onclick="selectSourceBatch(\'' + escAttr(b.id) + '\')">' +
+      '<div class="source-batch-name">' + escHtml(b.batchName) + '</div>' +
+      '<div class="source-batch-info">' + escHtml(b.name) + '</div>' +
+    '</div>'
+  ).join('') + '</div>';
+}
+
+function selectSourceBatch(id) {
+  selectedSourceId = (selectedSourceId === id) ? null : id;
+  document.getElementById('manualBatchName').value = '';
+  renderSourceBatches();
+}
+
+async function startNewSoakBatch() {
+  let batchName = '';
+  let sourceItemId = null;
+
+  if (selectedSourceId) {
+    const sb = sourceBatches.find(b => b.id === selectedSourceId);
+    batchName = sb ? sb.batchName : '';
+    sourceItemId = selectedSourceId;
+  } else {
+    batchName = document.getElementById('manualBatchName').value.trim();
+  }
+
+  if (!batchName) {
+    toast('Select a batch or enter a name', 'error');
+    return;
+  }
+
+  // Check if already exists in active batches
+  if (state.batches.some(b => b.batchName === batchName)) {
+    toast('Batch already active', 'error');
+    return;
+  }
+
+  // Create item on target board in Soak group
+  let mondayItemId = null;
+  try {
+    toast('Creating item on Monday.com...', 'info');
+    const itemName = batchName.replace(/"/g, '\\"');
+    const mutation = `mutation { create_item(board_id: ${TARGET_BOARD_ID}, group_id: "${GROUP_SOAK}", item_name: "${itemName}") { id } }`;
+    const data = await mondayQuery(mutation);
+    if (data.data && data.data.create_item) {
+      mondayItemId = data.data.create_item.id;
+      toast('Item created on Monday.com', 'success');
+    } else {
+      console.warn('Monday create item response:', JSON.stringify(data));
+      toast('Monday.com item creation had issues — continuing locally', 'info');
+    }
+  } catch(err) {
+    console.warn('Monday create item error:', err);
+    toast('Could not create Monday.com item — continuing locally', 'info');
+  }
+
+  // Create local batch
+  const batch = {
+    id: 'ref_' + Date.now(),
+    batchName: batchName,
+    sourceItemId: sourceItemId,
+    mondayItemId: mondayItemId,
+    created: new Date().toISOString(),
+    stage: 0,
+    crudeWeight: '',
+    acetoneVolume: '',
+    soakStart: '',
+    soakEnd: '',
+    soakOperator: ''
+  };
+  state.batches.push(batch);
+  state.activeBatchId = batch.id;
+  saveState();
+
+  // Show soak form
+  showStageForm(0, batch);
+}
+
+// ===== STAGE SELECT PAGE (for stages 1-4) =====
+function openStageSelectPage(stageIdx) {
+  state.activeBatchId = null;
+
+  const batchesAtStage = state.batches.filter(b => b.stage === stageIdx);
+
+  showView('stageFormView');
+  document.getElementById('stageFormTitle').textContent = 'Stage ' + (stageIdx + 1) + ': ' + STAGES[stageIdx];
+  document.getElementById('stageFormSubtitle').textContent = 'Select a batch to process';
+
+  // Render progress bar for context
+  renderStageProgressBar(stageIdx);
+
+  // Show batch selection
+  const selectSection = document.getElementById('stageSelectSection');
+  const formSection = document.getElementById('stageFormSection');
+  selectSection.style.display = '';
+  formSection.style.display = 'none';
+
+  const listEl = document.getElementById('stageBatchList');
+  if (batchesAtStage.length === 0) {
+    listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚗</div><div class="empty-state-text">No batches ready for ' + STAGES[stageIdx] + '.</div></div>';
+    return;
+  }
+
+  listEl.innerHTML = batchesAtStage.map(b => {
+    const dots = Array.from({length: STAGE_COUNT}, (_, i) => {
+      const cls = i < b.stage ? 'done' : i === b.stage ? 'current' : '';
+      return '<div class="batch-mini-dot ' + cls + '"></div>';
+    }).join('');
+    return '<div class="batch-item" onclick="selectBatchForStage(\'' + escAttr(b.id) + '\', ' + stageIdx + ')">' +
+      '<div class="batch-id">' + escHtml(b.batchName || b.id) + '</div>' +
+      '<span class="batch-stage-badge ' + STAGE_BADGES[Math.min(b.stage, STAGE_COUNT - 1)] + '">' + STAGES[Math.min(b.stage, STAGE_COUNT - 1)] + '</span>' +
+      '<div class="batch-meta">' +
+        '<span class="batch-meta-item">' + escHtml(b.crudeWeight || '—') + 'g crude</span>' +
+        '<span class="batch-meta-item">' + formatDateShort(b.created) + '</span>' +
+      '</div>' +
+      '<div class="batch-mini-progress">' + dots + '</div>' +
+      '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>' +
+    '</div>';
+  }).join('');
+}
+
+function selectBatchForStage(batchId, stageIdx) {
+  const batch = state.batches.find(b => b.id === batchId);
+  if (!batch) return;
+  state.activeBatchId = batchId;
+  showStageForm(stageIdx, batch);
+}
+
+// ===== SHOW STAGE FORM =====
+function showStageForm(stageIdx, batch) {
+  showView('stageFormView');
+  document.getElementById('stageFormTitle').textContent = 'Stage ' + (stageIdx + 1) + ': ' + STAGES[stageIdx];
+  document.getElementById('stageFormSubtitle').textContent = batch.batchName || batch.id;
+
+  renderStageProgressBar(stageIdx);
+
+  // Hide batch select, show form
+  document.getElementById('stageSelectSection').style.display = 'none';
+  document.getElementById('stageFormSection').style.display = '';
+
+  // Hide all forms
+  ['formSoak','formPinnacle','formRotovap','formOvens','formPrepWeigh'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+
+  // Hide all monday status indicators
+  document.querySelectorAll('.monday-status').forEach(el => el.style.display = 'none');
+
+  const now = toLocalDatetime(new Date());
+
+  if (stageIdx === 0) {
+    document.getElementById('formSoak').style.display = '';
+    document.getElementById('formSoakBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('crudeWeight').value = batch.crudeWeight || '';
+    calcAcetone();
+    document.getElementById('soakStart').value = batch.soakStart || now;
+    document.getElementById('soakEnd').value = batch.soakEnd || '';
+    document.getElementById('soakOperator').value = batch.soakOperator || state.currentOperator || '';
+    // Auto-set soakEnd if soakStart is set and soakEnd is empty
+    if (document.getElementById('soakStart').value && !document.getElementById('soakEnd').value) {
+      const start = new Date(document.getElementById('soakStart').value);
+      if (!isNaN(start)) {
+        document.getElementById('soakEnd').value = toLocalDatetime(new Date(start.getTime() + 16 * 60 * 60 * 1000));
+      }
+    }
+  } else if (stageIdx === 1) {
+    document.getElementById('formPinnacle').style.display = '';
+    document.getElementById('formPinnacleBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('pinnacleOperator').value = batch.pinnacleOperator || state.currentOperator || '';
+    document.getElementById('pinnacleStart').value = batch.pinnacleStart || now;
+    document.getElementById('pinnacleEnd').value = batch.pinnacleEnd || '';
+  } else if (stageIdx === 2) {
+    document.getElementById('formRotovap').style.display = '';
+    document.getElementById('formRotovapBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('rotovapOperator').value = batch.rotovapOperator || state.currentOperator || '';
+    document.getElementById('rotovapStart').value = batch.rotovapStart || now;
+    document.getElementById('volumePinnacle').value = batch.volumePinnacle || '';
+  } else if (stageIdx === 3) {
+    document.getElementById('formOvens').style.display = '';
+    document.getElementById('formOvensBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('ovenOperator').value = batch.ovenOperator || state.currentOperator || '';
+    document.getElementById('ovenStart').value = batch.ovenStart || now;
+    document.getElementById('ovenEnd').value = batch.ovenEnd || '';
+    document.getElementById('ovenNotes').value = batch.ovenNotes || '';
+  } else if (stageIdx === 4) {
+    document.getElementById('formPrepWeigh').style.display = '';
+    document.getElementById('formPrepWeighBatchName').textContent = batch.batchName || batch.id;
+    document.getElementById('finalOperator').value = batch.finalOperator || state.currentOperator || '';
+    document.getElementById('mitWeight').value = batch.mitWeight || '';
+    document.getElementById('weighTime').value = batch.weighTime || now;
+    document.getElementById('batchComments').value = batch.comments || '';
+  }
+}
+
+function renderStageProgressBar(currentStage) {
+  const container = document.getElementById('stageFormProgress');
+  let html = '';
+  STAGES.forEach((name, i) => {
+    const cls = i < currentStage ? 'completed' : i === currentStage ? 'active' : '';
+    const icon = i < currentStage ? '✓' : (i + 1);
+    html += '<div class="stage-step ' + cls + '"><div class="stage-dot">' + icon + '</div><div class="stage-name">' + name + '</div></div>';
+    if (i < STAGES.length - 1) {
+      html += '<div class="stage-connector ' + (i < currentStage ? 'completed' : '') + '"></div>';
+    }
+  });
+  container.innerHTML = html;
+}
+
+// ===== CALCULATIONS =====
+function calcAcetone() {
+  const crude = parseFloat(document.getElementById('crudeWeight').value) || 0;
+  const acetone = (crude * 5 / 1000).toFixed(2);
+  document.getElementById('acetoneVolume').textContent = acetone + ' L';
+}
+
+function calcDuration(startStr, endStr) {
+  if (!startStr || !endStr) return '—';
+  const start = new Date(startStr);
+  const end = new Date(endStr);
+  const hours = ((end - start) / (1000 * 60 * 60)).toFixed(1);
+  return hours + 'h';
+}
+
+function calcDurationHours(startStr, endStr) {
+  if (!startStr || !endStr) return '0';
+  const start = new Date(startStr);
+  const end = new Date(endStr);
+  return ((end - start) / (1000 * 60 * 60)).toFixed(1);
+}
+
+// ===== MONDAY.COM API HELPERS =====
+async function mondayQuery(query) {
+  const resp = await fetch(MONDAY_API, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': MONDAY_TOKEN,
+      'API-Version': '2024-10'
+    },
+    body: JSON.stringify({ query })
+  });
+  return resp.json();
+}
+
+function fmtDateTime(dtStr) {
+  if (!dtStr) return null;
+  try {
+    const d = new Date(dtStr);
+    if (isNaN(d)) return null;
+    const date = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    const time = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':00';
+    return { date, time };
+  } catch(e) { return null; }
+}
+
+// ===== MONDAY STATUS INDICATOR =====
+function updateMondayStatusEl(elId, status, message) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.style.display = 'block';
+  if (status === 'submitting') {
+    el.style.background = 'rgba(33,150,243,0.10)';
+    el.style.color = 'var(--accent-dark)';
+    el.style.border = '1px solid rgba(33,150,243,0.2)';
+    el.innerHTML = '<span style="display:inline-block;animation:spin 1s linear infinite;margin-right:8px;">⟳</span>' + message;
+  } else if (status === 'success') {
+    el.style.background = 'rgba(76,175,80,0.10)';
+    el.style.color = 'var(--green-dark)';
+    el.style.border = '1px solid rgba(76,175,80,0.2)';
+    el.innerHTML = '✓ ' + message;
+  } else if (status === 'error') {
+    el.style.background = 'rgba(244,67,54,0.10)';
+    el.style.color = 'var(--red-dark)';
+    el.style.border = '1px solid rgba(244,67,54,0.2)';
+    el.innerHTML = '✗ ' + message;
+  }
+}
+
+// ===== MONDAY.COM WRITE HELPERS =====
+async function mondayUpdateItem(itemId, columnValues) {
+  if (!itemId) return null;
+  const colValStr = JSON.stringify(JSON.stringify(columnValues));
+  const mutation = `mutation { change_multiple_column_values(board_id: ${TARGET_BOARD_ID}, item_id: ${itemId}, column_values: ${colValStr}) { id } }`;
+  return mondayQuery(mutation);
+}
+
+async function mondayMoveItem(itemId, groupId) {
+  if (!itemId) return null;
+  const mutation = `mutation { move_item_to_group(item_id: ${itemId}, group_id: "${groupId}") { id } }`;
+  return mondayQuery(mutation);
+}
+
+// ===== SUBMIT SOAK =====
+async function submitSoak() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const crude = document.getElementById('crudeWeight').value;
+  const soakOp = document.getElementById('soakOperator').value;
+  const soakStart = document.getElementById('soakStart').value;
+  if (!crude || !soakOp || !soakStart) {
+    toast('Fill in all required fields', 'error');
+    return;
+  }
+
+  batch.crudeWeight = crude;
+  batch.acetoneVolume = (parseFloat(crude) * 5 / 1000).toFixed(2);
+  batch.soakStart = soakStart;
+  batch.soakEnd = document.getElementById('soakEnd').value;
+  batch.soakOperator = soakOp;
+  batch.stage = 1;
+
+  // Write to Monday.com
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusSoak';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      const colVals = {};
+      colVals[COL_CRUDE_WEIGHT] = parseFloat(crude) || 0;
+      colVals[COL_ACETONE_VOLUME] = parseFloat(batch.acetoneVolume) || 0;
+      colVals[COL_SOAK_OPERATOR] = soakOp;
+      const ss = fmtDateTime(soakStart);
+      if (ss) colVals[COL_SOAK_START] = ss;
+      const se = fmtDateTime(batch.soakEnd);
+      if (se) colVals[COL_SOAK_END] = se;
+
+      await mondayUpdateItem(batch.mondayItemId, colVals);
+      await mondayMoveItem(batch.mondayItemId, GROUP_SOAK);
+      updateMondayStatusEl(statusEl, 'success', 'Soak data saved to Monday.com');
+    } catch(err) {
+      console.warn('Monday soak write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
+    }
+  }
+
+  saveState();
+  toast('Soak submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
+}
+
+// ===== SUBMIT PINNACLE =====
+async function submitPinnacle() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const op = document.getElementById('pinnacleOperator').value;
+  const start = document.getElementById('pinnacleStart').value;
+  if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
+
+  batch.pinnacleOperator = op;
+  batch.pinnacleStart = start;
+  batch.pinnacleEnd = document.getElementById('pinnacleEnd').value;
+  batch.stage = 2;
+
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusPinnacle';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      const colVals = {};
+      colVals[COL_PIN_OP] = op;
+      const ps = fmtDateTime(start);
+      if (ps) colVals[COL_PIN_START] = ps;
+      const pe = fmtDateTime(batch.pinnacleEnd);
+      if (pe) colVals[COL_PIN_END] = pe;
+
+      await mondayUpdateItem(batch.mondayItemId, colVals);
+      await mondayMoveItem(batch.mondayItemId, GROUP_PINNACLE);
+      updateMondayStatusEl(statusEl, 'success', 'Pinnacle data saved to Monday.com');
+    } catch(err) {
+      console.warn('Monday pinnacle write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
+    }
+  }
+
+  saveState();
+  toast('Pinnacle submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
+}
+
+// ===== SUBMIT ROTOVAP =====
+async function submitRotovap() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const op = document.getElementById('rotovapOperator').value;
+  const start = document.getElementById('rotovapStart').value;
+  if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
+
+  batch.rotovapOperator = op;
+  batch.rotovapStart = start;
+  batch.volumePinnacle = document.getElementById('volumePinnacle').value;
+  batch.stage = 3;
+
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusRotovap';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      const colVals = {};
+      colVals[COL_ROTO_OP] = op;
+      const rs = fmtDateTime(start);
+      if (rs) colVals[COL_ROTO_START] = rs;
+      if (batch.volumePinnacle) colVals[COL_ROTO_VOLUME] = parseFloat(batch.volumePinnacle) || 0;
+
+      await mondayUpdateItem(batch.mondayItemId, colVals);
+      await mondayMoveItem(batch.mondayItemId, GROUP_ROTOVAP);
+      updateMondayStatusEl(statusEl, 'success', 'Rotovap data saved to Monday.com');
+    } catch(err) {
+      console.warn('Monday rotovap write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
+    }
+  }
+
+  saveState();
+  toast('Rotovap submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
+}
+
+// ===== SUBMIT OVENS =====
+async function submitOvens() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const op = document.getElementById('ovenOperator').value;
+  const start = document.getElementById('ovenStart').value;
+  if (!op || !start) { toast('Fill in all required fields', 'error'); return; }
+
+  batch.ovenOperator = op;
+  batch.ovenStart = start;
+  batch.ovenEnd = document.getElementById('ovenEnd').value;
+  batch.ovenNotes = document.getElementById('ovenNotes').value;
+  batch.stage = 4;
+
+  if (batch.mondayItemId) {
+    const statusEl = 'mondayStatusOvens';
+    updateMondayStatusEl(statusEl, 'submitting', 'Saving to Monday.com...');
+    try {
+      await mondayMoveItem(batch.mondayItemId, GROUP_OVENS);
+      updateMondayStatusEl(statusEl, 'success', 'Moved to Ovens group on Monday.com');
+    } catch(err) {
+      console.warn('Monday ovens write error:', err);
+      updateMondayStatusEl(statusEl, 'error', 'Could not save to Monday.com');
+    }
+  }
+
+  saveState();
+  toast('Ovens submitted for ' + (batch.batchName || batch.id), 'success');
+  setTimeout(() => goHome(), 600);
+}
+
+// ===== SUBMIT PREP & WEIGH (COMPLETE BATCH) =====
+async function submitPrepWeigh() {
+  const batch = state.batches.find(b => b.id === state.activeBatchId);
+  if (!batch) { toast('Batch not found', 'error'); return; }
+
+  const op = document.getElementById('finalOperator').value;
+  const mit = document.getElementById('mitWeight').value;
+  const weighTime = document.getElementById('weighTime').value;
+  if (!op || !mit || !weighTime) { toast('Fill in all required fields', 'error'); return; }
+
+  batch.finalOperator = op;
+  batch.mitWeight = mit;
+  batch.weighTime = weighTime;
+  batch.comments = document.getElementById('batchComments').value || '';
+  batch.stage = STAGE_COUNT;
+  batch.completedAt = new Date().toISOString();
+
+  // Move to completed
+  const completedBatch = { ...batch };
+  state.completedBatches.push(completedBatch);
+  state.batches = state.batches.filter(b => b.id !== batch.id);
+  saveState();
+
+  // Show completion view
+  showCompletionView(completedBatch);
+  toast('Batch ' + (batch.batchName || batch.id) + ' completed!', 'success');
+
+  // Write final data to Monday.com
+  if (completedBatch.mondayItemId) {
+    updateMondayStatusEl('mondayStatusFinal', 'submitting', 'Submitting final data to Monday.com...');
+    try {
+      const colVals = {};
+      colVals[COL_FINAL_OP] = op;
+      colVals[COL_MIT_WEIGHT] = parseFloat(mit) || 0;
+      const wt = fmtDateTime(weighTime);
+      if (wt) colVals[COL_WEIGH_TIME] = wt;
+      const totalDur = calcDurationHours(completedBatch.soakStart, weighTime);
+      if (totalDur && totalDur !== '0') colVals[COL_TOTAL_DURATION] = parseFloat(totalDur) || 0;
+
+      await mondayUpdateItem(completedBatch.mondayItemId, colVals);
+      await mondayMoveItem(completedBatch.mondayItemId, GROUP_PREPWEIGH);
+
+      completedBatch.mondaySubmitted = true;
+      completedBatch.mondaySubmittedAt = new Date().toISOString();
+      saveState();
+
+      updateMondayStatusEl('mondayStatusFinal', 'success', 'All data submitted to Monday.com (Item #' + completedBatch.mondayItemId + ')');
+      document.getElementById('retryMondayBtn').style.display = 'none';
+    } catch(err) {
+      console.warn('Monday final write error:', err);
+      updateMondayStatusEl('mondayStatusFinal', 'error', 'Could not submit final data to Monday.com');
+      document.getElementById('retryMondayBtn').style.display = '';
+    }
+  }
+}
+
+// ===== COMPLETION VIEW =====
+function showCompletionView(batch) {
+  showView('completionView');
+  document.getElementById('completionBatchId').textContent = batch.batchName || batch.id;
+
+  const dur = calcDuration(batch.soakStart, batch.weighTime);
+  const summary = [
+    { label: 'Crude Weight', value: (batch.crudeWeight || '—') + ' g' },
+    { label: 'Acetone Volume', value: (batch.acetoneVolume || '—') + ' L' },
+    { label: 'MIT Weight', value: (batch.mitWeight || '—') + ' g' },
+    { label: 'Total Duration', value: dur },
+    { label: 'Soak Operator', value: batch.soakOperator },
+    { label: 'Pinnacle Operator', value: batch.pinnacleOperator },
+    { label: 'Rotovap Operator', value: batch.rotovapOperator },
+    { label: 'Oven Operator', value: batch.ovenOperator },
+    { label: 'Final Operator', value: batch.finalOperator },
+  ];
+  if (batch.volumePinnacle) {
+    summary.splice(3, 0, { label: 'Volume from Pinnacle', value: batch.volumePinnacle + ' L' });
+  }
+  if (batch.ovenNotes) {
+    summary.push({ label: 'Oven Notes', value: batch.ovenNotes });
+  }
+  if (batch.comments) {
+    summary.push({ label: 'Comments', value: batch.comments });
+  }
+
+  document.getElementById('completionSummary').innerHTML = summary.map(s =>
+    '<div class="summary-item"><div class="label">' + s.label + '</div><div class="value">' + escHtml(s.value || '—') + '</div></div>'
+  ).join('');
+
+  // Reset Monday status display
+  document.getElementById('mondayStatusFinal').style.display = 'none';
+  document.getElementById('retryMondayBtn').style.display = 'none';
+
+  // Store the last completed batch for CSV/Monday
+  state._lastCompleted = batch;
+}
+
+function viewCompletedBatch(batchId) {
+  const batch = state.completedBatches.find(b => b.id === batchId);
+  if (!batch) return;
+  state._lastCompleted = batch;
+  showCompletionView(batch);
+}
+
+async function retryMondayFinal() {
+  const batch = state._lastCompleted;
+  if (!batch || !batch.mondayItemId) { toast('No batch data', 'error'); return; }
+  document.getElementById('retryMondayBtn').style.display = 'none';
+
+  updateMondayStatusEl('mondayStatusFinal', 'submitting', 'Retrying submission to Monday.com...');
+  try {
+    const colVals = {};
+    colVals[COL_FINAL_OP] = batch.finalOperator || '';
+    colVals[COL_MIT_WEIGHT] = parseFloat(batch.mitWeight) || 0;
+    const wt = fmtDateTime(batch.weighTime);
+    if (wt) colVals[COL_WEIGH_TIME] = wt;
+    const totalDur = calcDurationHours(batch.soakStart, batch.weighTime);
+    if (totalDur && totalDur !== '0') colVals[COL_TOTAL_DURATION] = parseFloat(totalDur) || 0;
+
+    await mondayUpdateItem(batch.mondayItemId, colVals);
+    await mondayMoveItem(batch.mondayItemId, GROUP_PREPWEIGH);
+
+    batch.mondaySubmitted = true;
+    batch.mondaySubmittedAt = new Date().toISOString();
+    saveState();
+
+    updateMondayStatusEl('mondayStatusFinal', 'success', 'All data submitted to Monday.com (Item #' + batch.mondayItemId + ')');
+  } catch(err) {
+    console.warn('Monday retry error:', err);
+    updateMondayStatusEl('mondayStatusFinal', 'error', 'Retry failed — could not submit to Monday.com');
+    document.getElementById('retryMondayBtn').style.display = '';
+  }
+}
+
+// ===== HISTORY VIEW =====
+function goToHistory() {
+  showView('historyView');
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById('historyContent');
+  const batches = state.completedBatches;
+  const dlBtn = document.getElementById('downloadAllBtn');
+  if (batches.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">No completed batches yet.</div></div>';
+    dlBtn.style.display = 'none';
+    return;
+  }
+  dlBtn.style.display = '';
+  let html = '<div class="history-table-wrap"><table class="history-table"><thead><tr>' +
+    '<th>Batch</th><th>Date</th><th>Crude (g)</th><th>Acetone (L)</th><th>MIT (g)</th><th>Duration</th><th>Actions</th>' +
+    '</tr></thead><tbody>';
+  batches.slice().reverse().forEach(b => {
+    const dur = calcDuration(b.soakStart, b.weighTime);
+    html += '<tr>' +
+      '<td class="mono">' + escHtml(b.batchName || b.id) + '</td>' +
+      '<td>' + formatDateShort(b.created) + '</td>' +
+      '<td class="mono">' + escHtml(b.crudeWeight) + '</td>' +
+      '<td class="mono">' + escHtml(b.acetoneVolume) + '</td>' +
+      '<td class="mono">' + escHtml(b.mitWeight) + '</td>' +
+      '<td>' + dur + '</td>' +
+      '<td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); viewCompletedBatch(\'' + escAttr(b.id) + '\')">View</button></td>' +
+    '</tr>';
+  });
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+// ===== CSV DOWNLOAD =====
+function downloadCSV() {
+  const batch = state._lastCompleted;
+  if (!batch) { toast('No batch data', 'error'); return; }
+
+  const headers = ['Batch Name','Date','Crude Weight (g)','Acetone Volume (L)','MIT Weight (g)','Total Duration (h)',
+    'Soak Operator','Soak Start','Soak End','Pinnacle Operator','Pinnacle Start','Pinnacle End',
+    'Rotovap Operator','Rotovap Start','Volume from Pinnacle (L)',
+    'Oven Operator','Oven Start','Oven End','Oven Notes',
+    'Final Operator','Weigh Time','Comments'];
+  const values = [
+    batch.batchName || batch.id,
+    batch.created ? new Date(batch.created).toISOString().split('T')[0] : '',
+    batch.crudeWeight || '',
+    batch.acetoneVolume || '',
+    batch.mitWeight || '',
+    calcDurationHours(batch.soakStart, batch.weighTime),
+    batch.soakOperator || '',
+    batch.soakStart || '',
+    batch.soakEnd || '',
+    batch.pinnacleOperator || '',
+    batch.pinnacleStart || '',
+    batch.pinnacleEnd || '',
+    batch.rotovapOperator || '',
+    batch.rotovapStart || '',
+    batch.volumePinnacle || '',
+    batch.ovenOperator || '',
+    batch.ovenStart || '',
+    batch.ovenEnd || '',
+    batch.ovenNotes || '',
+    batch.finalOperator || '',
+    batch.weighTime || '',
+    batch.comments || ''
+  ];
+
+  const csv = headers.join(',') + '\n' + values.map(v => '"' + String(v || '').replace(/"/g, '""') + '"').join(',');
+  downloadCsvBlob(csv, 'refinement_' + (batch.batchName || batch.id).replace(/[/\\]/g, '-') + '.csv');
+}
+
+function downloadAllCSV() {
+  if (state.completedBatches.length === 0) { toast('No completed batches', 'error'); return; }
+
+  const headers = ['Batch Name','Date','Crude Weight (g)','Acetone Volume (L)','MIT Weight (g)','Total Duration (h)',
+    'Soak Operator','Soak Start','Soak End','Pinnacle Operator','Pinnacle Start','Pinnacle End',
+    'Rotovap Operator','Rotovap Start','Volume from Pinnacle (L)',
+    'Oven Operator','Oven Start','Oven End','Oven Notes',
+    'Final Operator','Weigh Time','Comments'];
+
+  let csv = headers.join(',') + '\n';
+  state.completedBatches.forEach(b => {
+    const values = [
+      b.batchName || b.id, b.created ? new Date(b.created).toISOString().split('T')[0] : '',
+      b.crudeWeight || '', b.acetoneVolume || '', b.mitWeight || '',
+      calcDurationHours(b.soakStart, b.weighTime),
+      b.soakOperator || '', b.soakStart || '', b.soakEnd || '',
+      b.pinnacleOperator || '', b.pinnacleStart || '', b.pinnacleEnd || '',
+      b.rotovapOperator || '', b.rotovapStart || '', b.volumePinnacle || '',
+      b.ovenOperator || '', b.ovenStart || '', b.ovenEnd || '', b.ovenNotes || '',
+      b.finalOperator || '', b.weighTime || '', b.comments || ''
+    ];
+    csv += values.map(v => '"' + String(v || '').replace(/"/g, '""') + '"').join(',') + '\n';
+  });
+
+  downloadCsvBlob(csv, 'refinement_all_batches_' + new Date().toISOString().split('T')[0] + '.csv');
+}
+
+function downloadCsvBlob(csv, filename) {
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('CSV downloaded', 'success');
+}
+
+// ===== UTILITIES =====
+function toLocalDatetime(date) {
+  const off = date.getTimezoneOffset();
+  const local = new Date(date.getTime() - off * 60000);
+  return local.toISOString().slice(0, 16);
+}
+
+function formatDateShort(isoStr) {
+  if (!isoStr) return '—';
+  const d = new Date(isoStr);
+  return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+
+function escAttr(str) {
+  return String(str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function toast(msg, type) {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast toast-' + (type || 'info');
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 4000);
+}
+
+function showModal(title, text, actions) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('modalActions').innerHTML = actions.map(a =>
+    '<button class="btn ' + a.cls + '" onclick="' + a.action + '">' + a.text + '</button>'
+  ).join('');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(event) {
+  if (event.target === document.getElementById('modalOverlay')) {
+    closeModalDirect();
+  }
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+// Soak start time auto-update soak end (+16h)
+document.getElementById('soakStart').addEventListener('change', function() {
+  const start = new Date(this.value);
+  if (!isNaN(start)) {
+    const end = new Date(start.getTime() + 16 * 60 * 60 * 1000);
+    document.getElementById('soakEnd').value = toLocalDatetime(end);
+  }
+});
+
+// ===== PREVIEW MODE (for development/testing) =====
+function checkPreview() {
+  const hash = window.location.hash;
+  if (hash.includes('preview=home')) {
+    state.currentOperator = 'Quinton L';
+    state.batches = [
+      { id: 'ref_1', batchName: 'QL.3/5.94584', created: new Date().toISOString(), stage: 0, crudeWeight: '94584', acetoneVolume: '472.92', soakStart: toLocalDatetime(new Date(Date.now() - 3600000)), soakEnd: '', soakOperator: 'Quinton L', mondayItemId: null },
+      { id: 'ref_2', batchName: 'JR.3/5.52000', created: new Date().toISOString(), stage: 3, crudeWeight: '52000', acetoneVolume: '260.00', soakStart: toLocalDatetime(new Date(Date.now() - 20*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 4*3600000)), soakOperator: 'Jaime R', pinnacleOperator: 'Jaime R', pinnacleStart: toLocalDatetime(new Date(Date.now() - 3*3600000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 1*3600000)), rotovapOperator: 'James L', rotovapStart: toLocalDatetime(new Date(Date.now() - 0.5*3600000)), volumePinnacle: '48.5', ovenOperator: 'Sly', ovenStart: toLocalDatetime(new Date(Date.now() - 0.25*3600000)), mondayItemId: null },
+      { id: 'ref_3', batchName: 'JL.3/5.78200', created: new Date().toISOString(), stage: 1, crudeWeight: '78200', acetoneVolume: '391.00', soakStart: toLocalDatetime(new Date(Date.now() - 18*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 2*3600000)), soakOperator: 'James L', pinnacleOperator: 'James L', pinnacleStart: toLocalDatetime(new Date()), mondayItemId: null },
+      { id: 'ref_4', batchName: 'JD.3/5.41000', created: new Date().toISOString(), stage: 2, crudeWeight: '41000', acetoneVolume: '205.00', soakStart: toLocalDatetime(new Date(Date.now() - 24*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 8*3600000)), soakOperator: 'Jaime D', pinnacleOperator: 'Jaime D', pinnacleStart: toLocalDatetime(new Date(Date.now() - 6*3600000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 4*3600000)), rotovapOperator: 'Moh', rotovapStart: toLocalDatetime(new Date()), mondayItemId: null },
+      { id: 'ref_5', batchName: 'SL.3/5.33000', created: new Date().toISOString(), stage: 4, crudeWeight: '33000', acetoneVolume: '165.00', soakStart: toLocalDatetime(new Date(Date.now() - 48*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 32*3600000)), soakOperator: 'Sly', pinnacleOperator: 'Sly', pinnacleStart: toLocalDatetime(new Date(Date.now() - 30*3600000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 28*3600000)), rotovapOperator: 'Sly', rotovapStart: toLocalDatetime(new Date(Date.now() - 26*3600000)), volumePinnacle: '30.2', ovenOperator: 'Kevin D', ovenStart: toLocalDatetime(new Date(Date.now() - 20*3600000)), ovenEnd: toLocalDatetime(new Date(Date.now() - 8*3600000)), ovenNotes: 'Oven 2', mondayItemId: null }
+    ];
+    state.completedBatches = [
+      { id: 'ref_0', batchName: 'JD.3/4.61000', created: new Date(Date.now() - 86400000).toISOString(), completedAt: new Date(Date.now() - 43200000).toISOString(), stage: 5, crudeWeight: '61000', acetoneVolume: '305.00', mitWeight: '3200', soakStart: toLocalDatetime(new Date(Date.now() - 86400000)), soakEnd: toLocalDatetime(new Date(Date.now() - 70400000)), soakOperator: 'Jaime D', pinnacleOperator: 'Jaime D', pinnacleStart: toLocalDatetime(new Date(Date.now() - 70000000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 60000000)), rotovapOperator: 'Quinton L', rotovapStart: toLocalDatetime(new Date(Date.now() - 55000000)), volumePinnacle: '48.5', ovenOperator: 'Moh', ovenStart: toLocalDatetime(new Date(Date.now() - 50000000)), ovenEnd: toLocalDatetime(new Date(Date.now() - 45000000)), ovenNotes: 'Oven 2', finalOperator: 'Quinton L', weighTime: toLocalDatetime(new Date(Date.now() - 43200000)), mondayItemId: null }
+    ];
+    showHome();
+    return true;
+  }
+  if (hash.includes('preview=dashboard')) {
+    // Legacy alias
+    state.currentOperator = 'Quinton L';
+    state.batches = [
+      { id: 'ref_1', batchName: 'QL.3/5.94584', created: new Date().toISOString(), stage: 0, crudeWeight: '94584', acetoneVolume: '472.92', soakStart: toLocalDatetime(new Date(Date.now() - 3600000)), soakEnd: '', soakOperator: 'Quinton L', mondayItemId: null },
+      { id: 'ref_2', batchName: 'JR.3/5.52000', created: new Date().toISOString(), stage: 3, crudeWeight: '52000', acetoneVolume: '260.00', soakStart: toLocalDatetime(new Date(Date.now() - 20*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 4*3600000)), soakOperator: 'Jaime R', pinnacleOperator: 'Jaime R', pinnacleStart: toLocalDatetime(new Date(Date.now() - 3*3600000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 1*3600000)), rotovapOperator: 'James L', rotovapStart: toLocalDatetime(new Date(Date.now() - 0.5*3600000)), volumePinnacle: '48.5', ovenOperator: 'Sly', ovenStart: toLocalDatetime(new Date(Date.now() - 0.25*3600000)), mondayItemId: null },
+      { id: 'ref_3', batchName: 'JL.3/5.78200', created: new Date().toISOString(), stage: 1, crudeWeight: '78200', acetoneVolume: '391.00', soakStart: toLocalDatetime(new Date(Date.now() - 18*3600000)), soakEnd: toLocalDatetime(new Date(Date.now() - 2*3600000)), soakOperator: 'James L', pinnacleOperator: 'James L', pinnacleStart: toLocalDatetime(new Date()), mondayItemId: null }
+    ];
+    state.completedBatches = [
+      { id: 'ref_0', batchName: 'JD.3/4.61000', created: new Date(Date.now() - 86400000).toISOString(), completedAt: new Date(Date.now() - 43200000).toISOString(), stage: 5, crudeWeight: '61000', acetoneVolume: '305.00', mitWeight: '3200', soakStart: toLocalDatetime(new Date(Date.now() - 86400000)), soakEnd: toLocalDatetime(new Date(Date.now() - 70400000)), soakOperator: 'Jaime D', pinnacleOperator: 'Jaime D', pinnacleStart: toLocalDatetime(new Date(Date.now() - 70000000)), pinnacleEnd: toLocalDatetime(new Date(Date.now() - 60000000)), rotovapOperator: 'Quinton L', rotovapStart: toLocalDatetime(new Date(Date.now() - 55000000)), volumePinnacle: '48.5', ovenOperator: 'Moh', ovenStart: toLocalDatetime(new Date(Date.now() - 50000000)), ovenEnd: toLocalDatetime(new Date(Date.now() - 45000000)), ovenNotes: 'Oven 2', finalOperator: 'Quinton L', weighTime: toLocalDatetime(new Date(Date.now() - 43200000)), mondayItemId: null }
+    ];
+    showHome();
+    return true;
+  }
+  if (hash.includes('preview=select')) {
+    state.currentOperator = 'Quinton L';
+    document.getElementById('operatorBadge').style.display = 'flex';
+    document.getElementById('operatorName').textContent = 'Quinton L';
+    document.getElementById('logoutBtn').style.display = '';
+    openSoakPage();
+    return true;
+  }
+  if (hash.includes('preview=soak')) {
+    state.currentOperator = 'Quinton L';
+    document.getElementById('operatorBadge').style.display = 'flex';
+    document.getElementById('operatorName').textContent = 'Quinton L';
+    document.getElementById('logoutBtn').style.display = '';
+    const batch = {
+      id: 'ref_preview', batchName: 'QL.3/12.94584', created: new Date().toISOString(), stage: 0,
+      crudeWeight: '94584', soakStart: toLocalDatetime(new Date()), soakEnd: toLocalDatetime(new Date(Date.now() + 16*3600000)),
+      soakOperator: 'Quinton L', mondayItemId: null
+    };
+    state.batches = [batch];
+    state.activeBatchId = batch.id;
+    showStageForm(0, batch);
+    return true;
+  }
+  return false;
+}
+
+
+// ===== BOOT =====
+populateOperatorDropdowns();
+if (!checkPreview()) { init(); }
+</script>
+</body>
+</html>
